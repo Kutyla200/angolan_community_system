@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\AuditLog;
 
 class LoginController extends Controller
 {
@@ -25,7 +26,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             // Log the login action
-            \App\Models\AuditLog::create([
+            AuditLog::create([
                 'admin_user_id' => Auth::guard('admin')->id(),
                 'action' => 'login',
                 'description' => 'Admin logged in',
@@ -44,7 +45,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // Log the logout action
-        \App\Models\AuditLog::create([
+        AuditLog::create([
             'admin_user_id' => Auth::guard('admin')->id(),
             'action' => 'logout',
             'description' => 'Admin logged out',
