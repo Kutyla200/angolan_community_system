@@ -58,7 +58,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">{{ __('Active This Week') }}</p>
-                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['thisWeek']) }}</h3>
+                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['this_week']) }}</h3>
                     <p class="text-sm text-gray-600 mt-2">{{ __('new registrations') }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-50 text-green-600 rounded-lg flex items-center justify-center">
@@ -71,7 +71,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">{{ __('Willing to Help') }}</p>
-                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['willingToHelp']) }}</h3>
+                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['willing_to_help']) }}</h3>
                     <p class="text-sm text-gray-600 mt-2">{{ __('community volunteers') }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-lg flex items-center justify-center">
@@ -129,12 +129,12 @@
             <div class="space-y-4">
                 @foreach($analyticsData['employment_stats'] as $stat)
                 <div class="flex items-center justify-between">
-                    <span class="text-gray-700">{{ __(ucfirst(str_replace('_', ' ', $stat->status))) }}</span>
+                    <span class="text-gray-700">{{ __(ucfirst(str_replace('_', ' ', $stat['status']))) }}</span>
                     <div class="flex items-center">
-                        <span class="font-semibold mr-3">{{ $stat->count }}</span>
+                        <span class="font-semibold mr-3">{{ $stat['count'] }}</span>
                         <div class="w-32 bg-gray-200 rounded-full h-2">
                             <div class="bg-primary h-2 rounded-full" 
-                                 style="width: {{ ($stat->count / $stats['total'] * 100) }}%"></div>
+                                 style="width: {{ ($stat['count'] / $stats['total'] * 100) }}%"></div>
                         </div>
                     </div>
                 </div>

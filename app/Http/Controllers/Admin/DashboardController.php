@@ -30,21 +30,30 @@ class DashboardController extends Controller
      * Display analytics page
      */
     public function analytics()
-    {
-        $analyticsData = [
-            'registration_trends' => $this->getRegistrationTrends(),
-            'age_distribution' => $this->getAgeDistribution(),
-            'employment_stats' => $this->getEmploymentStats(),
-            'skill_demand' => $this->getSkillDemand(),
-            'help_availability' => $this->getHelpAvailability(),
-            'gender_stats' => $this->getGenderStats(),
-            'top_cities' => $this->getTopCities(),
-            'province_growth' => $this->getProvinceGrowth(),
-        ];
-        
-        return view('admin.analytics', compact('analyticsData'));
-    }
+{
+    // Get the base stats for the top cards
+    $stats = $this->getDashboardStats();
     
+    // Total for percentage calculations in the view
+    $stats['total'] = Member::count();
+
+    $analyticsData = [
+        'registration_trends' => $this->getRegistrationTrends(),
+        'age_distribution' => $this->getAgeDistribution(),
+        'employment_stats' => $this->getEmploymentStats(),
+        'skill_demand' => $this->getSkillDemand(),
+        'help_availability' => $this->getHelpAvailability(),
+        'gender_stats' => $this->getGenderStats(),
+        'top_cities' => $this->getTopCities(),
+        'province_growth' => $this->getProvinceGrowth(),
+    ];
+
+    // These two variables are explicitly called in analytics.blade.php
+    $provinceDistribution = $this->getProvinceStats();
+    $skillDistribution = $this->getSkillDistribution();
+
+    return view('admin.analytics', compact('analyticsData', 'stats', 'provinceDistribution', 'skillDistribution'));
+}
     /**
      * Get analytics data as JSON
      */
