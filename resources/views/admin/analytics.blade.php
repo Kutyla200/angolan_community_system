@@ -42,7 +42,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">{{ __('Total Members') }}</p>
-                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['total']) }}</h3>
+                    <h3 class="text-3xl font-bold mt-2">{{ number_format($stats['total_members']) }}</h3>
                     <p class="text-sm text-green-600 mt-2">
                         <i class="bi bi-arrow-up mr-1"></i>
                         +{{ $stats['today'] }} {{ __('today') }}

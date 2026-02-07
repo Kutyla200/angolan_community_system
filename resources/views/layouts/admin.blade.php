@@ -172,7 +172,7 @@
                 {{ __('Dashboard') }}
             </a>
             
-            <a href="{{ route('admin.members') }}" 
+            <a href="{{ route('admin.members.index') }}" 
                class="nav-link {{ request()->routeIs('admin.members*') ? 'active' : '' }}">
                 <i class="bi bi-people mr-3"></i>
                 {{ __('Members') }}

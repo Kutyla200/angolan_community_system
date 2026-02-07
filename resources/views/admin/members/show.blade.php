@@ -91,7 +91,7 @@
 <div class="space-y-6">
     <!-- Back Button -->
     <div class="flex items-center justify-between no-print">
-        <a href="{{ route('admin.members') }}" class="flex items-center text-gray-600 hover:text-primary">
+        <a href="{{ route('admin.members.index') }}" class="flex items-center text-gray-600 hover:text-primary">
             <i class="bi bi-arrow-left mr-2"></i>
             {{ __('Back to Members') }}
         </a>

@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AuditLogController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,12 @@ Route::get('/', function () {
 | Admin Authentication Routes
 |--------------------------------------------------------------------------
 */
+
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
+
+// Registration Routes
+Route::get('/register', [RegistrationController::class, 'index'])->name('registration');
+Route::post('/register', [RegistrationController::class, 'store'])->name('registration.store');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     

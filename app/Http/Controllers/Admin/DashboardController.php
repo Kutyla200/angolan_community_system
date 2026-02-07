@@ -21,8 +21,9 @@ class DashboardController extends Controller
         $recentMembers = $this->getRecentMembers();
         $recentActivity = $this->getRecentActivity();
         $provinceStats = $this->getProvinceStats();
+        $skillDistribution = $this->getSkillDistribution();
         
-        return view('admin.dashboard', compact('stats', 'recentMembers', 'recentActivity', 'provinceStats'));
+        return view('admin.dashboard', compact('stats', 'recentMembers', 'recentActivity', 'provinceStats', 'skillDistribution'));
     }
     
     /**
@@ -57,33 +58,48 @@ class DashboardController extends Controller
             'help_availability' => $this->getHelpAvailability(),
             'gender_stats' => $this->getGenderStats(),
             'top_cities' => $this->getTopCities(),
+            
         ]);
     }
-    
+    private function getSkillDistribution()
+{
+    return DB::table('member_skills')
+        ->join('skills', 'member_skills.skill_id', '=', 'skills.id')
+        ->select(
+            'skills.name_en',
+            'skills.name_pt',
+            DB::raw('COUNT(*) as count')
+        )
+        ->groupBy('skills.id', 'skills.name_en', 'skills.name_pt')
+        ->orderBy('count', 'desc')
+        ->limit(10)
+        ->get();
+}
+
     /**
      * Get dashboard statistics
      */
     private function getDashboardStats()
-    {
-        $query = Member::query();
-        
-        // Apply role-based restrictions
-        if (auth('admin')->user()->isCoordinator()) {
-            $query->where('province', auth('admin')->user()->assigned_province);
-        }
-        
-        return [
-            'total_members' => $query->count(),
-            'today' => $query->whereDate('created_at', today())->count(),
-            'this_week' => $query->whereBetween('created_at', [now()->startOfWeek(), now()])->count(),
-            'this_month' => $query->whereBetween('created_at', [now()->startOfMonth(), now()])->count(),
-            'willing_to_help' => $query->where('willing_to_help', true)->count(),
-            'employed' => $query->where('employment_status', 'employed')->count(),
-            'students' => $query->where('employment_status', 'student')->count(),
-            'unemployed' => $query->where('employment_status', 'unemployed')->count(),
-            'growth_rate' => $this->calculateGrowthRate(),
-        ];
+{
+    $baseQuery = Member::query();
+
+    if (auth('admin')->user()->isCoordinator()) {
+        $baseQuery->where('province', auth('admin')->user()->assigned_province);
     }
+
+    return [
+        'total_members'   => (clone $baseQuery)->count(),
+        'today'           => (clone $baseQuery)->whereDate('created_at', today())->count(),
+        'this_week'       => (clone $baseQuery)->whereBetween('created_at', [now()->startOfWeek(), now()])->count(),
+        'this_month'      => (clone $baseQuery)->whereBetween('created_at', [now()->startOfMonth(), now()])->count(),
+        'willing_to_help' => (clone $baseQuery)->where('willing_to_help', true)->count(),
+        'employed'        => (clone $baseQuery)->where('employment_status', 'employed')->count(),
+        'students'        => (clone $baseQuery)->where('employment_status', 'student')->count(),
+        'unemployed'      => (clone $baseQuery)->where('employment_status', 'unemployed')->count(),
+        'growth_rate'     => $this->calculateGrowthRate(),
+    ];
+}
+
     
     /**
      * Get recent members
