@@ -24,12 +24,15 @@ class CommunitySupportArea extends Model
     ];
 
     // Relationships
-    public function members()
-    {
-        return $this->belongsToMany(Member::class, 'member_support_areas')
-                    ->withPivot('additional_info')
-                    ->withTimestamps();
-    }
+   // In app/Models/CommunitySupportArea.php
+
+public function members()
+{
+    // Fix: Explicitly define the foreign keys 'support_area_id' and 'member_id'
+    return $this->belongsToMany(Member::class, 'member_support_areas', 'support_area_id', 'member_id')
+                ->withPivot('additional_info')
+                ->withTimestamps();
+}
 
     // Localization
     public function getNameAttribute()

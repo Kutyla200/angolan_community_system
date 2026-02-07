@@ -71,12 +71,15 @@ class Member extends Model
                     ->withTimestamps();
     }
 
-    public function supportAreas()
-    {
-        return $this->belongsToMany(CommunitySupportArea::class, 'member_support_areas')
-                    ->withPivot('additional_info')
-                    ->withTimestamps();
-    }
+// In app/Models/Member.php
+
+public function supportAreas()
+{
+    // Fix: Explicitly define the foreign keys 'member_id' and 'support_area_id'
+    return $this->belongsToMany(CommunitySupportArea::class, 'member_support_areas', 'member_id', 'support_area_id')
+                ->withPivot('additional_info')
+                ->withTimestamps();
+}
 
     // Scopes
     public function scopeActive($query)
