@@ -1,263 +1,621 @@
 @extends('layouts.app')
 
-
-@section('title', __('Welcome to Angolan Community Portal'))
+@section('title', __('Welcome to UMOJA Angola'))
 
 @push('styles')
 <style>
-    /* Hero Section Styles */
+    /* Modern Hero Section */
     .hero-section {
-        background: linear-gradient(135deg, 
-            rgba(0, 135, 81, 0.05) 0%, 
-            rgba(204, 9, 47, 0.03) 50%, 
-            rgba(255, 209, 0, 0.02) 100%);
+        min-height: 90vh;
+        background: linear-gradient(135deg, #008751 0%, #006b42 50%, #004d2f 100%);
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding: 2rem 0;
     }
     
     .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 30%, rgba(255, 209, 0, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(204, 9, 47, 0.15) 0%, transparent 50%);
+        animation: pulse-glow 8s ease-in-out infinite;
+    }
+    
+    .hero-section::after {
         content: '';
         position: absolute;
         top: -50%;
         left: -50%;
         width: 200%;
         height: 200%;
-        background-image: 
-            radial-gradient(circle at 20% 80%, rgba(0, 135, 81, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(204, 9, 47, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(255, 209, 0, 0.05) 0%, transparent 50%);
-        animation: blob 20s infinite alternate;
-        z-index: 0;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 100px,
+            rgba(255, 255, 255, 0.03) 100px,
+            rgba(255, 255, 255, 0.03) 200px
+        );
+        animation: slide 20s linear infinite;
+    }
+    
+    @keyframes pulse-glow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+    
+    @keyframes slide {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(100px, 100px); }
     }
     
     .hero-content {
         position: relative;
-        z-index: 1;
+        z-index: 10;
     }
     
-    /* Feature Card Hover Effects */
-    .feature-card {
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        background: linear-gradient(white, white) padding-box,
-                    linear-gradient(135deg, #00875122, #CC092F11, #FFD10011) border-box;
+    .hero-logo {
+        animation: float 6s ease-in-out infinite;
+        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
     }
     
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        border-color: transparent;
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
     }
     
-    /* Stats Counter Animation */
-    .stat-number {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .hero-title {
+        animation: fadeInUp 1s ease-out;
     }
     
-    /* Step Animation */
-    .step-icon {
-        position: relative;
-        transition: all 0.3s ease;
+    .hero-subtitle {
+        animation: fadeInUp 1.2s ease-out;
     }
     
-    .step-icon::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 120%;
-        height: 120%;
-        border-radius: 50%;
-        background: rgba(0, 135, 81, 0.1);
-        z-index: -1;
+    .hero-cta {
+        animation: fadeInUp 1.4s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Modern Stats Cards */
+    .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: fadeInScale 0.8s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    .stat-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 1);
+    }
+    
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    /* Section Animations */
+    .section-fade-in {
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
-    .step:hover .step-icon::after {
+    .section-fade-in.visible {
         opacity: 1;
+        transform: translateY(0);
     }
     
-    /* CTA Button Animation */
-    .cta-button {
+    /* Modern Feature Cards */
+    .feature-card {
+        background: white;
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0, 0, 0, 0.05);
         position: relative;
         overflow: hidden;
     }
     
-    .cta-button::after {
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #008751, #CC092F, #FFD100);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+    
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        transition: all 0.4s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    /* Leadership Cards */
+    .leader-card {
+        perspective: 1000px;
+    }
+    
+    .leader-card-inner {
+        background: white;
+        border-radius: 24px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+    }
+    
+    .leader-card:hover .leader-card-inner {
+        transform: translateY(-15px) rotateX(5deg);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .leader-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        position: relative;
+        overflow: hidden;
+        border: 5px solid white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.4s ease;
+    }
+    
+    .leader-card:hover .leader-avatar {
+        transform: scale(1.1);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .leader-avatar::after {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    /* Modern CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #008751 0%, #006b42 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 209, 0, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Modern Button */
+    .btn-modern {
+        background: white;
+        color: #008751;
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-modern::before {
         content: '';
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 5px;
-        height: 5px;
-        background: rgba(255, 255, 255, 0.5);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(0, 135, 81, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-modern:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .btn-modern:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-modern span {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Testimonial Cards */
+    .testimonial-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        border-left: 4px solid #008751;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Step Cards */
+    .step-card {
+        text-align: center;
+        position: relative;
+    }
+    
+    .step-number {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #008751, #006b42);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 135, 81, 0.3);
+        transition: all 0.4s ease;
+        position: relative;
+    }
+    
+    .step-card:hover .step-number {
+        transform: scale(1.15) rotate(360deg);
+        box-shadow: 0 15px 40px rgba(0, 135, 81, 0.4);
+    }
+    
+    .step-number::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        border: 3px solid #FFD100;
         opacity: 0;
-        border-radius: 100%;
-        transform: scale(1, 1) translate(-50%);
-        transform-origin: 50% 50%;
+        transition: opacity 0.4s ease;
     }
     
-    .cta-button:hover::after {
-        animation: ripple 1s ease-out;
+    .step-card:hover .step-number::after {
+        opacity: 1;
+        animation: pulse-ring 2s infinite;
     }
     
-    /* Wave Animation */
-    .wave {
-        animation: wave 2s ease-in-out infinite;
+    @keyframes pulse-ring {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.5; }
     }
     
-    @keyframes blob {
-        0% {
-            transform: translate(0px, 0px) scale(1);
-        }
-        33% {
-            transform: translate(50px, -30px) scale(1.1);
-        }
-        66% {
-            transform: translate(-20px, 20px) scale(0.9);
-        }
-        100% {
-            transform: translate(0px, 0px) scale(1);
-        }
+    /* About Section */
+    .about-section {
+        background: linear-gradient(to bottom, #ffffff, #f8f9fa, #ffffff);
+        position: relative;
     }
     
-    @keyframes ripple {
-        0% {
-            transform: scale(0, 0);
-            opacity: 0.5;
-        }
-        100% {
-            transform: scale(50, 50);
-            opacity: 0;
-        }
+    .about-card {
+        background: white;
+        border-radius: 24px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
     }
     
-    @keyframes wave {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-15px);
-        }
+    .about-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     }
     
-    /* Mobile Optimizations */
-    @media (max-width: 640px) {
+    /* Contact Section */
+    .contact-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        text-align: center;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        transition: all 0.4s ease;
+    }
+    
+    .contact-card:hover .contact-icon {
+        transform: scale(1.15) rotate(360deg);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
         .hero-section {
-            padding-top: 60px;
-            padding-bottom: 40px;
+            min-height: 80vh;
+            padding: 1rem 0;
         }
         
-        .feature-card {
-            margin-bottom: 20px;
-        }
-        
-        .step {
-            margin-bottom: 30px;
-        }
-        
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 15px !important;
+        .stat-card {
+            margin-bottom: 1rem;
         }
     }
     
-    /* Tablet Optimizations */
-    @media (max-width: 1024px) {
-        .hero-section::before {
-            animation: blob 30s infinite alternate;
-        }
+    /* Scroll Animations */
+    .animate-on-scroll {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .animate-on-scroll.animated {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+    
+    /* Ensure sections are visible */
+    section {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Section backgrounds */
+    .about-section {
+        background: linear-gradient(to bottom, #ffffff, #f8f9fa, #ffffff) !important;
+    }
+    
+    #features {
+        background: white !important;
+    }
+    
+    #leadership {
+        background: white !important;
     }
 </style>
 @endpush
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section py-16 md:py-24">
+<section class="hero-section">
     <div class="container-wide px-4 sm:px-6 lg:px-8">
-        <div class="hero-content text-center max-w-5xl mx-auto">
-            <!-- Logo and Title -->
+        <div class="hero-content text-center max-w-6xl mx-auto">
+            <!-- Logo -->
             <div class="flex justify-center mb-8">
-                <div class="relative">
-                    <div class="w-28 h-28 gradient-primary rounded-full flex items-center justify-center wave">
-                        <i class="bi bi-people-fill text-white text-5xl"></i>
+                <div class="hero-logo relative">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-white flex items-center justify-center shadow-2xl border-8 border-white/20">
+                        <img src="{{ asset('umoja.jpeg') }}" alt="UMOJA Angola" class="w-full h-full object-cover rounded-full p-2">
                     </div>
-                    <div class="absolute -top-2 -right-2 w-12 h-12 bg-secondary rounded-full flex items-center justify-center animate-pulse">
-                        <i class="bi bi-flag-fill text-white text-xl"></i>
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center shadow-xl animate-pulse">
+                        <i class="bi bi-flag-fill text-white text-2xl"></i>
                     </div>
-                    <div class="absolute -bottom-2 -left-2 w-10 h-10 bg-accent rounded-full flex items-center justify-center animate-pulse-slow">
-                        <i class="bi bi-heart-fill text-dark text-lg"></i>
+                    <div class="absolute -bottom-4 -left-4 w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-xl animate-pulse" style="animation-delay: 0.5s;">
+                        <i class="bi bi-heart-fill text-white text-xl"></i>
                     </div>
                 </div>
             </div>
             
-            <!-- Main Heading -->
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                <span class="text-gradient-primary">{{ __('Angolan Community') }}</span>
-                <span class="block text-gray-800">{{ __('in South Africa') }}</span>
-            </h1>
+            <!-- Title -->
+            <div class="hero-title mb-6">
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-4 leading-tight">
+                    <span class="block">UMOJA</span>
+                    <span class="block text-yellow-300">Angola</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 font-light">
+                    {{ __('Angolan Community Organization in South Africa') }}
+                </p>
+            </div>
             
-            <!-- Subtitle -->
-            <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-                {{ __('Connecting Angolans through support, skills sharing, and opportunities. Building a stronger community together.') }}
-            </p>
+            <!-- Tagline -->
+            <div class="hero-subtitle mb-10">
+                <p class="text-2xl md:text-3xl text-white/95 font-semibold mb-2">
+                    {{ __('United in Unity') }}
+                </p>
+                <p class="text-xl md:text-2xl text-yellow-200 font-medium">
+                    {{ __('Stronger Together') }}
+                </p>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-12 max-w-3xl mx-auto">
+                <p class="text-lg md:text-xl text-white/90 leading-relaxed">
+                    {{ __('UMOJA Angola connects Angolans across South Africa through mutual support, skills sharing, and community empowerment. Together, we build a stronger, more united Angolan community.') }}
+                </p>
+            </div>
             
             <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in">
-                <a href="{{ route('registration') }}" 
-                   class="cta-button btn-primary px-8 py-4 text-lg flex items-center justify-center group">
-                    <i class="bi bi-person-plus mr-3 text-xl group-hover:scale-110 transition-transform"></i>
-                    {{ __('Register Now') }}
-                    <i class="bi bi-arrow-right ml-3 text-xl group-hover:translate-x-2 transition-transform"></i>
+            <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="{{ route('registration') }}" class="btn-modern inline-flex items-center justify-center">
+                    <span>
+                        <i class="bi bi-person-plus-fill mr-2"></i>
+                        {{ __('Register Now') }}
+                    </span>
                 </a>
-                
-                <a href="#features" 
-                   class="btn-outline px-8 py-4 text-lg flex items-center justify-center group">
-                    <i class="bi bi-play-circle mr-3 text-xl"></i>
-                    {{ __('How It Works') }}
+                <a href="#about" class="btn-modern inline-flex items-center justify-center bg-white/10 backdrop-blur-md text-white border-2 border-white/30 hover:bg-white/20">
+                    <span>
+                        <i class="bi bi-info-circle mr-2"></i>
+                        {{ __('Learn More') }}
+                    </span>
                 </a>
             </div>
             
-            <!-- Stats Preview -->
-            <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
-                <div class="card p-6 text-center transform hover:scale-105 transition-transform duration-300">
-                    <div class="stat-number text-3xl font-bold mb-2">500+</div>
-                    <div class="text-gray-600 font-medium">{{ __('Community Members') }}</div>
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="stat-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-800 mb-2">500+</div>
+                    <div class="text-sm font-semibold text-gray-700">{{ __('Members') }}</div>
                 </div>
-                <div class="card p-6 text-center transform hover:scale-105 transition-transform duration-300">
-                    <div class="stat-number text-3xl font-bold mb-2">9</div>
-                    <div class="text-gray-600 font-medium">{{ __('Provinces Covered') }}</div>
+                <div class="stat-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800 mb-2">9</div>
+                    <div class="text-sm font-semibold text-gray-700">{{ __('Provinces') }}</div>
                 </div>
-                <div class="card p-6 text-center transform hover:scale-105 transition-transform duration-300">
-                    <div class="stat-number text-3xl font-bold mb-2">50+</div>
-                    <div class="text-gray-600 font-medium">{{ __('Skills Categories') }}</div>
+                <div class="stat-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 mb-2">50+</div>
+                    <div class="text-sm font-semibold text-gray-700">{{ __('Skills') }}</div>
                 </div>
-                <div class="card p-6 text-center transform hover:scale-105 transition-transform duration-300">
-                    <div class="stat-number text-3xl font-bold mb-2">24/7</div>
-                    <div class="text-gray-600 font-medium">{{ __('Community Support') }}</div>
+                <div class="stat-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 mb-2">24/7</div>
+                    <div class="text-sm font-semibold text-gray-700">{{ __('Support') }}</div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section about-section" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: linear-gradient(to bottom, #ffffff, #f8f9fa, #ffffff);">
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        <div class="text-center mb-16 animate-on-scroll">
+            <span class="badge-primary mb-4 inline-block">{{ __('About UMOJA') }}</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+                {{ __('Who We Are') }}
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                {{ __('UMOJA Angola is a community organization dedicated to uniting and empowering Angolans living in South Africa. We believe in the power of unity, mutual support, and collective growth.') }}
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <div class="about-card animate-on-scroll">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mr-4">
+                        <i class="bi bi-bullseye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900">{{ __('Our Mission') }}</h3>
+                </div>
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    {{ __('To create a strong, united, and supportive network of Angolans in South Africa, fostering community cohesion, cultural preservation, and mutual assistance for the betterment of all members.') }}
+                </p>
+            </div>
             
-            <!-- Trust Indicators -->
-            <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-                <div class="flex items-center">
-                    <i class="bi bi-shield-check text-primary mr-2"></i>
-                    {{ __('Secure & Private') }}
+            <div class="about-card animate-on-scroll">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center mr-4">
+                        <i class="bi bi-eye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900">{{ __('Our Vision') }}</h3>
                 </div>
-                <div class="hidden md:block">•</div>
-                <div class="flex items-center">
-                    <i class="bi bi-lock text-primary mr-2"></i>
-                    {{ __('POPIA Compliant') }}
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    {{ __('A thriving, self-sufficient Angolan community in South Africa where every member has access to support, opportunities, and resources needed to succeed and contribute to both the Angolan and South African societies.') }}
+                </p>
+            </div>
+        </div>
+        
+        <!-- Objectives -->
+        <div class="about-card animate-on-scroll">
+            <div class="flex items-center mb-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mr-4">
+                    <i class="bi bi-list-check text-white text-2xl"></i>
                 </div>
-                <div class="hidden md:block">•</div>
-                <div class="flex items-center">
-                    <i class="bi bi-translate text-primary mr-2"></i>
-                    {{ __('English & Portuguese') }}
+                <h3 class="text-2xl font-black text-gray-900">{{ __('Our Objectives') }}</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Promote unity and solidarity among Angolans in South Africa') }}</span>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Provide support and assistance to community members in need') }}</span>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Facilitate skills sharing, job opportunities, and professional networking') }}</span>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Preserve and promote Angolan culture and heritage') }}</span>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Advocate for the rights and interests of Angolan community members') }}</span>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                    <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
+                    <span class="text-gray-700">{{ __('Build bridges between the Angolan and South African communities') }}</span>
                 </div>
             </div>
         </div>
@@ -265,90 +623,84 @@
 </section>
 
 <!-- Features Section -->
-<section id="features" class="section bg-white">
-    <div class="container-wide px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span class="badge-primary mb-4">{{ __('Why Join Us?') }}</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+<section id="features" class="section bg-white" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: white;">
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        <div class="text-center mb-16 animate-on-scroll">
+            <span class="badge-secondary mb-4 inline-block">{{ __('Why Join UMOJA?') }}</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
                 {{ __('Empowering Our Community') }}
             </h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                {{ __('Join a trusted network of Angolans supporting each other in South Africa.') }}
-            </p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
-            <div class="feature-card p-8 card-hover">
-                <div class="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i class="bi bi-shield-check text-white text-2xl"></i>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon bg-gradient-to-br from-green-500 to-green-700 text-white">
+                    <i class="bi bi-shield-check text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-center mb-4">{{ __('Secure & Private') }}</h3>
-                <p class="text-gray-600 text-center">
+                <h3 class="text-2xl font-black text-center mb-4 text-gray-900">{{ __('Secure & Private') }}</h3>
+                <p class="text-gray-600 text-center mb-6">
                     {{ __('Your data is protected with enterprise-grade security, encryption, and strict privacy controls. We are POPIA compliant.') }}
                 </p>
-                <ul class="mt-4 space-y-2">
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-primary mr-2"></i>
-                        {{ __('End-to-end encryption') }}
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-green-600 mr-3"></i>
+                        <span>{{ __('End-to-end encryption') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-primary mr-2"></i>
-                        {{ __('Regular security audits') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-green-600 mr-3"></i>
+                        <span>{{ __('Regular security audits') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-primary mr-2"></i>
-                        {{ __('Data ownership retained') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-green-600 mr-3"></i>
+                        <span>{{ __('Data ownership retained') }}</span>
                     </li>
                 </ul>
             </div>
             
-            <!-- Feature 2 -->
-            <div class="feature-card p-8 card-hover">
-                <div class="w-16 h-16 bg-secondary-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i class="bi bi-people-fill text-white text-2xl"></i>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon bg-gradient-to-br from-red-500 to-red-700 text-white">
+                    <i class="bi bi-people-fill text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-center mb-4">{{ __('Community Network') }}</h3>
-                <p class="text-gray-600 text-center">
+                <h3 class="text-2xl font-black text-center mb-4 text-gray-900">{{ __('Community Network') }}</h3>
+                <p class="text-gray-600 text-center mb-6">
                     {{ __('Connect with fellow Angolans for support, opportunities, and meaningful collaborations across South Africa.') }}
                 </p>
-                <ul class="mt-4 space-y-2">
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-secondary mr-2"></i>
-                        {{ __('Verified community members') }}
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-red-600 mr-3"></i>
+                        <span>{{ __('Verified community members') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-secondary mr-2"></i>
-                        {{ __('Local meetups & events') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-red-600 mr-3"></i>
+                        <span>{{ __('Local meetups & events') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-secondary mr-2"></i>
-                        {{ __('Cultural exchange programs') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-red-600 mr-3"></i>
+                        <span>{{ __('Cultural exchange programs') }}</span>
                     </li>
                 </ul>
             </div>
             
-            <!-- Feature 3 -->
-            <div class="feature-card p-8 card-hover">
-                <div class="w-16 h-16 bg-accent-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i class="bi bi-briefcase-fill text-dark-900 text-2xl"></i>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon bg-gradient-to-br from-yellow-400 to-yellow-600 text-white">
+                    <i class="bi bi-briefcase-fill text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-center mb-4">{{ __('Opportunities') }}</h3>
-                <p class="text-gray-600 text-center">
+                <h3 class="text-2xl font-black text-center mb-4 text-gray-900">{{ __('Opportunities') }}</h3>
+                <p class="text-gray-600 text-center mb-6">
                     {{ __('Access exclusive job referrals, business opportunities, professional networking, and skill development programs.') }}
                 </p>
-                <ul class="mt-4 space-y-2">
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-accent mr-2"></i>
-                        {{ __('Job matching system') }}
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-yellow-600 mr-3"></i>
+                        <span>{{ __('Job matching system') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-accent mr-2"></i>
-                        {{ __('Business partnerships') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-yellow-600 mr-3"></i>
+                        <span>{{ __('Business partnerships') }}</span>
                     </li>
-                    <li class="flex items-center text-sm text-gray-600">
-                        <i class="bi bi-check-circle text-accent mr-2"></i>
-                        {{ __('Skill certification') }}
+                    <li class="flex items-center text-gray-700">
+                        <i class="bi bi-check-circle-fill text-yellow-600 mr-3"></i>
+                        <span>{{ __('Skill certification') }}</span>
                     </li>
                 </ul>
             </div>
@@ -357,95 +709,185 @@
 </section>
 
 <!-- How It Works -->
-<section class="section bg-gradient-to-b from-gray-50 to-white">
-    <div class="container-wide px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span class="badge-secondary mb-4">{{ __('Simple Process') }}</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+<section class="section bg-gradient-to-b from-gray-50 to-white" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: linear-gradient(to bottom, #f9fafb, #ffffff);">
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        <div class="text-center mb-16 animate-on-scroll">
+            <span class="badge-accent mb-4 inline-block">{{ __('Simple Process') }}</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
                 {{ __('How It Works') }}
             </h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                {{ __('Join our community network in four simple steps.') }}
-            </p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- Step 1 -->
-            <div class="step text-center">
-                <div class="relative mb-6">
-                    <div class="step-icon w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
-                        1
-                    </div>
-                    <div class="absolute -top-2 -right-2 w-10 h-10 bg-accent rounded-full flex items-center justify-center animate-pulse">
-                        <i class="bi bi-pencil-fill text-dark text-sm"></i>
-                    </div>
-                </div>
-                <h3 class="text-lg font-bold mb-3">{{ __('Register') }}</h3>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">1</div>
+                <h3 class="text-xl font-black mb-3 text-gray-900">{{ __('Register') }}</h3>
                 <p class="text-gray-600">
                     {{ __('Fill out our secure registration form with your basic information. Takes less than 5 minutes.') }}
                 </p>
             </div>
             
-            <!-- Step 2 -->
-            <div class="step text-center">
-                <div class="relative mb-6">
-                    <div class="step-icon w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
-                        2
-                    </div>
-                    <div class="absolute -top-2 -right-2 w-10 h-10 bg-accent rounded-full flex items-center justify-center animate-pulse">
-                        <i class="bi bi-tools text-dark text-sm"></i>
-                    </div>
-                </div>
-                <h3 class="text-lg font-bold mb-3">{{ __('Share Skills') }}</h3>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">2</div>
+                <h3 class="text-xl font-black mb-3 text-gray-900">{{ __('Share Skills') }}</h3>
                 <p class="text-gray-600">
                     {{ __('Tell us about your skills, experience, and how you can help other community members.') }}
                 </p>
             </div>
             
-            <!-- Step 3 -->
-            <div class="step text-center">
-                <div class="relative mb-6">
-                    <div class="step-icon w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
-                        3
-                    </div>
-                    <div class="absolute -top-2 -right-2 w-10 h-10 bg-accent rounded-full flex items-center justify-center animate-pulse">
-                        <i class="bi bi-shield-check text-dark text-sm"></i>
-                    </div>
-                </div>
-                <h3 class="text-lg font-bold mb-3">{{ __('Get Verified') }}</h3>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">3</div>
+                <h3 class="text-xl font-black mb-3 text-gray-900">{{ __('Get Verified') }}</h3>
                 <p class="text-gray-600">
                     {{ __('Our community team verifies your registration to ensure safety and authenticity.') }}
                 </p>
             </div>
             
-            <!-- Step 4 -->
-            <div class="step text-center">
-                <div class="relative mb-6">
-                    <div class="step-icon w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
-                        4
-                    </div>
-                    <div class="absolute -top-2 -right-2 w-10 h-10 bg-accent rounded-full flex items-center justify-center animate-pulse">
-                        <i class="bi bi-people-fill text-dark text-sm"></i>
-                    </div>
-                </div>
-                <h3 class="text-lg font-bold mb-3">{{ __('Connect') }}</h3>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">4</div>
+                <h3 class="text-xl font-black mb-3 text-gray-900">{{ __('Connect') }}</h3>
                 <p class="text-gray-600">
                     {{ __('Start connecting with community members, opportunities, and support networks immediately.') }}
                 </p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Leadership Section -->
+<section id="leadership" class="section bg-white" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: white;">
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        <div class="text-center mb-16 animate-on-scroll">
+            <span class="badge-primary mb-4 inline-block">{{ __('Our Leadership') }}</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+                {{ __('Meet Our Leadership Team') }}
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                {{ __('Dedicated leaders working tirelessly to serve and strengthen the Angolan community in South Africa.') }}
+            </p>
+        </div>
         
-        <!-- Progress Indicator -->
-        <div class="max-w-4xl mx-auto mt-12">
-            <div class="relative">
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Leader 1 -->
+            <div class="leader-card animate-on-scroll">
+                <div class="leader-card-inner text-center">
+                    <div class="leader-avatar bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-5xl font-bold">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('President') }}</h3>
+                    <p class="text-green-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-gray-600 mb-6 min-h-[60px]">
+                        {{ __('Leading the organization with vision and dedication to unite the Angolan community.') }}
+                    </p>
+                    <div class="space-y-3">
+                        <a href="tel:+27123456789" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                            <i class="bi bi-telephone-fill mr-2"></i>
+                            <span>+27 12 345 6789</span>
+                        </a>
+                        <a href="mailto:president@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                            <i class="bi bi-envelope-fill mr-2"></i>
+                            <span class="text-sm">president@umojaangola.org</span>
+                        </a>
+                        <a href="https://wa.me/27123456789" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                            <i class="bi bi-whatsapp mr-2"></i>
+                            <span>{{ __('WhatsApp') }}</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="absolute inset-0 flex justify-between items-center">
-                    <div class="w-4 h-4 bg-primary-600 rounded-full"></div>
-                    <div class="w-4 h-4 bg-primary-600 rounded-full"></div>
-                    <div class="w-4 h-4 bg-primary-600 rounded-full"></div>
-                    <div class="w-4 h-4 bg-primary-600 rounded-full"></div>
+            </div>
+            
+            <!-- Leader 2 -->
+            <div class="leader-card animate-on-scroll">
+                <div class="leader-card-inner text-center">
+                    <div class="leader-avatar bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-5xl font-bold">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Vice President') }}</h3>
+                    <p class="text-red-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-gray-600 mb-6 min-h-[60px]">
+                        {{ __('Supporting community initiatives and coordinating member engagement activities.') }}
+                    </p>
+                    <div class="space-y-3">
+                        <a href="tel:+27123456790" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                            <i class="bi bi-telephone-fill mr-2"></i>
+                            <span>+27 12 345 6790</span>
+                        </a>
+                        <a href="mailto:vicepresident@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                            <i class="bi bi-envelope-fill mr-2"></i>
+                            <span class="text-sm">vicepresident@umojaangola.org</span>
+                        </a>
+                        <a href="https://wa.me/27123456790" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                            <i class="bi bi-whatsapp mr-2"></i>
+                            <span>{{ __('WhatsApp') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Leader 3 -->
+            <div class="leader-card animate-on-scroll">
+                <div class="leader-card-inner text-center">
+                    <div class="leader-avatar bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-5xl font-bold">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Secretary General') }}</h3>
+                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-gray-600 mb-6 min-h-[60px]">
+                        {{ __('Managing communications, documentation, and administrative operations.') }}
+                    </p>
+                    <div class="space-y-3">
+                        <a href="tel:+27123456791" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-telephone-fill mr-2"></i>
+                            <span>+27 12 345 6791</span>
+                        </a>
+                        <a href="mailto:secretary@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-envelope-fill mr-2"></i>
+                            <span class="text-sm">secretary@umojaangola.org</span>
+                        </a>
+                        <a href="https://wa.me/27123456791" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-whatsapp mr-2"></i>
+                            <span>{{ __('WhatsApp') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- General Contact -->
+        <div class="mt-16 max-w-4xl mx-auto animate-on-scroll">
+            <div class="bg-gradient-to-br from-green-50 to-red-50 rounded-3xl p-8 border-2 border-green-200">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-black text-gray-900 mb-3">{{ __('General Contact Information') }}</h3>
+                    <p class="text-gray-600 text-lg">{{ __('Reach out to us for any inquiries or support') }}</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="contact-card">
+                        <div class="contact-icon bg-gradient-to-br from-green-500 to-green-700 text-white">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <h4 class="font-black text-gray-900 mb-2">{{ __('Email') }}</h4>
+                        <a href="mailto:info@umojaangola.org" class="text-green-600 hover:text-green-800 transition font-semibold">
+                            info@umojaangola.org
+                        </a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon bg-gradient-to-br from-red-500 to-red-700 text-white">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <h4 class="font-black text-gray-900 mb-2">{{ __('Phone') }}</h4>
+                        <a href="tel:+27123456789" class="text-red-600 hover:text-red-800 transition font-semibold">
+                            +27 12 345 6789
+                        </a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon bg-gradient-to-br from-green-500 to-green-600 text-white">
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+                        <h4 class="font-black text-gray-900 mb-2">{{ __('WhatsApp') }}</h4>
+                        <a href="https://wa.me/27123456789" target="_blank" class="text-green-600 hover:text-green-800 transition font-semibold">
+                            {{ __('Send Message') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -453,31 +895,30 @@
 </section>
 
 <!-- Testimonials -->
-<section class="section bg-white">
-    <div class="container-narrow px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="badge-accent mb-4">{{ __('Community Voices') }}</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+<section class="section bg-gradient-to-b from-white to-gray-50" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: linear-gradient(to bottom, #ffffff, #f9fafb);">
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        <div class="text-center mb-16 animate-on-scroll">
+            <span class="badge-accent mb-4 inline-block">{{ __('Community Voices') }}</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
                 {{ __('What Members Say') }}
             </h2>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Testimonial 1 -->
-            <div class="card p-6">
+            <div class="testimonial-card animate-on-scroll">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-                        <i class="bi bi-person-circle text-primary-600 text-xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="bi bi-person-circle"></i>
                     </div>
-                    <div class="ml-4">
-                        <h4 class="font-bold">{{ __('Maria Silva') }}</h4>
+                    <div>
+                        <h4 class="font-black text-gray-900">{{ __('Maria Silva') }}</h4>
                         <p class="text-sm text-gray-600">{{ __('Johannesburg') }}</p>
                     </div>
                 </div>
-                <p class="text-gray-700 italic">
+                <p class="text-gray-700 italic mb-4">
                     "{{ __('This platform helped me find housing when I first arrived in South Africa. The community support was incredible.') }}"
                 </p>
-                <div class="flex text-accent-500 mt-3">
+                <div class="flex text-yellow-400">
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
@@ -486,21 +927,20 @@
                 </div>
             </div>
             
-            <!-- Testimonial 2 -->
-            <div class="card p-6">
+            <div class="testimonial-card animate-on-scroll">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center">
-                        <i class="bi bi-person-circle text-secondary-600 text-xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="bi bi-person-circle"></i>
                     </div>
-                    <div class="ml-4">
-                        <h4 class="font-bold">{{ __('José Fernandes') }}</h4>
+                    <div>
+                        <h4 class="font-black text-gray-900">{{ __('José Fernandes') }}</h4>
                         <p class="text-sm text-gray-600">{{ __('Cape Town') }}</p>
                     </div>
                 </div>
-                <p class="text-gray-700 italic">
+                <p class="text-gray-700 italic mb-4">
                     "{{ __('Through the community network, I found a job in my field within two weeks. The job referral system works!') }}"
                 </p>
-                <div class="flex text-accent-500 mt-3">
+                <div class="flex text-yellow-400">
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
@@ -509,21 +949,20 @@
                 </div>
             </div>
             
-            <!-- Testimonial 3 -->
-            <div class="card p-6">
+            <div class="testimonial-card animate-on-scroll">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center">
-                        <i class="bi bi-person-circle text-accent-600 text-xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="bi bi-person-circle"></i>
                     </div>
-                    <div class="ml-4">
-                        <h4 class="font-bold">{{ __('Ana Costa') }}</h4>
+                    <div>
+                        <h4 class="font-black text-gray-900">{{ __('Ana Costa') }}</h4>
                         <p class="text-sm text-gray-600">{{ __('Durban') }}</p>
                     </div>
                 </div>
-                <p class="text-gray-700 italic">
+                <p class="text-gray-700 italic mb-4">
                     "{{ __('The legal guidance I received through this platform saved me months of stress. Thank you to our community lawyers!') }}"
                 </p>
-                <div class="flex text-accent-500 mt-3">
+                <div class="flex text-yellow-400">
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
@@ -535,88 +974,23 @@
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="section gradient-primary text-white relative overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 right-0 bottom-0 pattern-angular"></div>
-    </div>
-    
-    <div class="container-wide px-4 sm:px-6 lg:px-8 relative z-10">
+<!-- Final CTA -->
+<section class="cta-section section relative" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: linear-gradient(135deg, #008751 0%, #006b42 100%); position: relative;">
+    <div class="container-wide px-4 sm:px-6 lg:px-8 relative z-10" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 10;">
         <div class="max-w-4xl mx-auto text-center">
-            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="bi bi-people text-white text-3xl"></i>
-            </div>
-            
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">
-                {{ __('Ready to Join Our Community?') }}
+            <h2 class="text-4xl md:text-6xl font-black text-white mb-6 animate-on-scroll">
+                {{ __('Ready to Join UMOJA Angola?') }}
             </h2>
-            
-            <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-                {{ __('Register today and become part of the growing Angolan community network in South Africa. Connect, share, and grow together.') }}
+            <p class="text-xl md:text-2xl text-white/95 mb-10 max-w-2xl mx-auto animate-on-scroll">
+                {{ __('Join UMOJA Angola today and become part of a growing, united Angolan community network in South Africa. Connect, share, and grow together.') }}
             </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('registration') }}" 
-                   class="cta-button bg-white text-primary-600 hover:bg-gray-100 px-10 py-4 rounded-lg text-lg font-bold flex items-center justify-center group">
-                    <i class="bi bi-person-plus mr-3 text-xl group-hover:scale-110 transition-transform"></i>
-                    {{ __('Register Now - It\'s Free!') }}
-                    <i class="bi bi-arrow-right ml-3 text-xl group-hover:translate-x-2 transition-transform"></i>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-on-scroll">
+                <a href="{{ route('registration') }}" class="btn-modern inline-flex items-center justify-center">
+                    <span>
+                        <i class="bi bi-person-plus-fill mr-2"></i>
+                        {{ __('Register Now - It\'s Free!') }}
+                    </span>
                 </a>
-                
-                <a href="#features" 
-                   class="px-10 py-4 border-2 border-white/30 hover:border-white text-white rounded-lg text-lg font-bold flex items-center justify-center group backdrop-blur-sm">
-                    <i class="bi bi-play-circle mr-3 text-xl"></i>
-                    {{ __('Watch Tutorial') }}
-                </a>
-            </div>
-            
-            <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div>
-                    <div class="text-2xl font-bold">✓</div>
-                    <p class="text-sm text-white/80">{{ __('No Fees') }}</p>
-                </div>
-                <div>
-                    <div class="text-2xl font-bold">✓</div>
-                    <p class="text-sm text-white/80">{{ __('Secure Data') }}</p>
-                </div>
-                <div>
-                    <div class="text-2xl font-bold">✓</div>
-                    <p class="text-sm text-white/80">{{ __('24/7 Support') }}</p>
-                </div>
-                <div>
-                    <div class="text-2xl font-bold">✓</div>
-                    <p class="text-sm text-white/80">{{ __('Bilingual') }}</p>
-                </div>
-            </div>
-            
-            <p class="mt-10 text-white/70 text-sm flex items-center justify-center">
-                <i class="bi bi-shield-lock mr-2"></i>
-                {{ __('Your information is secure, private, and never shared without consent.') }}
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- Footer Stats -->
-<section class="py-8 bg-dark-900 text-white">
-    <div class="container-wide px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-                <div class="text-2xl font-bold text-primary-300">🇦🇴</div>
-                <p class="text-sm text-gray-300">{{ __('Proudly Angolan') }}</p>
-            </div>
-            <div>
-                <div class="text-2xl font-bold text-primary-300">🤝</div>
-                <p class="text-sm text-gray-300">{{ __('Community First') }}</p>
-            </div>
-            <div>
-                <div class="text-2xl font-bold text-primary-300">🔒</div>
-                <p class="text-sm text-gray-300">{{ __('Privacy Focused') }}</p>
-            </div>
-            <div>
-                <div class="text-2xl font-bold text-primary-300">🌍</div>
-                <p class="text-sm text-gray-300">{{ __('South Africa Wide') }}</p>
             </div>
         </div>
     </div>
@@ -625,26 +999,47 @@
 
 @section('scripts')
 <script>
-    // Animate stats counter
     document.addEventListener('DOMContentLoaded', function() {
-        // Stats counter animation
-        const statElements = document.querySelectorAll('.stat-number');
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
         
-        statElements.forEach(stat => {
-            const target = parseInt(stat.textContent);
-            let current = 0;
-            const increment = target / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
                 }
-                stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
-            }, 50);
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
         });
         
-        // Smooth scrolling for anchor links
+        // Stats counter animation
+        const statNumbers = document.querySelectorAll('.stat-card .text-4xl');
+        statNumbers.forEach(stat => {
+            const text = stat.textContent;
+            const number = parseInt(text.replace(/\D/g, ''));
+            if (number) {
+                let current = 0;
+                const increment = number / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= number) {
+                        stat.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        const suffix = text.includes('+') ? '+' : '';
+                        stat.textContent = Math.floor(current) + suffix;
+                    }
+                }, 30);
+            }
+        });
+        
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -653,40 +1048,16 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
+                    const headerOffset = 100;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: offsetPosition,
                         behavior: 'smooth'
                     });
                 }
             });
-        });
-        
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all feature cards and steps
-        document.querySelectorAll('.feature-card, .step').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Parallax effect for hero section
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-section');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.1}px)`;
-            }
         });
     });
 </script>

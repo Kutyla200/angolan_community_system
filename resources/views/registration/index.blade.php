@@ -4,108 +4,240 @@
 
 @push('styles')
 <style>
+    /* Enhanced Registration Page Styles */
+    .registration-hero {
+        background: linear-gradient(135deg, rgba(0, 135, 81, 0.05) 0%, rgba(204, 9, 47, 0.03) 50%, rgba(255, 209, 0, 0.02) 100%);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+    
     .step {
         display: none;
     }
     
     .step.active {
         display: block;
-        animation: fadeIn 0.5s ease-in-out;
+        animation: fadeInSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeInSlide {
+        from { 
+            opacity: 0; 
+            transform: translateY(20px) scale(0.95); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
     }
     
     .progress-bar {
-        height: 8px;
-        background-color: #e5e7eb;
-        border-radius: 4px;
+        height: 10px;
+        background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+        border-radius: 10px;
         overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
     }
     
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--primary-color), #006b42);
-        transition: width 0.3s ease;
+        background: linear-gradient(90deg, var(--primary-color), #006b42, var(--secondary-color));
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 135, 81, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
     }
     
     .step-indicator {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        transition: all 0.3s ease;
+        font-size: 18px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: #e5e7eb;
+        color: #6b7280;
+        border: 3px solid transparent;
+        position: relative;
     }
     
     .step-indicator.active {
-        background-color: var(--primary-color);
+        background: linear-gradient(135deg, var(--primary-color), #006b42);
         color: white;
-        box-shadow: 0 4px 6px rgba(0, 135, 81, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 135, 81, 0.3);
+        transform: scale(1.1);
+        border-color: var(--accent-color);
     }
     
     .step-indicator.completed {
-        background-color: var(--accent-color);
+        background: linear-gradient(135deg, var(--accent-color), #ffd700);
         color: var(--dark-color);
+        box-shadow: 0 4px 12px rgba(255, 209, 0, 0.3);
+    }
+    
+    .step-indicator.completed::after {
+        content: '✓';
+        position: absolute;
+        font-size: 24px;
     }
     
     .form-card {
         background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s ease;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
     }
     
     .form-card:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+        transform: translateY(-2px);
+    }
+    
+    .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
     }
     
     .skill-chip {
         display: inline-flex;
         align-items: center;
-        padding: 8px 16px;
-        margin: 4px;
-        background-color: #f3f4f6;
-        border-radius: 20px;
-        transition: all 0.2s ease;
+        padding: 10px 20px;
+        margin: 6px;
+        background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+        border-radius: 25px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
         border: 2px solid transparent;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .skill-chip::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.5s;
+    }
+    
+    .skill-chip:hover::before {
+        left: 100%;
     }
     
     .skill-chip.selected {
-        background-color: rgba(0, 135, 81, 0.1);
+        background: linear-gradient(135deg, rgba(0, 135, 81, 0.1), rgba(0, 135, 81, 0.15));
         border-color: var(--primary-color);
         color: var(--primary-color);
+        box-shadow: 0 4px 12px rgba(0, 135, 81, 0.2);
+        transform: translateY(-2px);
     }
     
     .skill-chip:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Enhanced Input Styles */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="number"],
+    select {
+        transition: all 0.3s ease;
+    }
+    
+    input:focus,
+    select:focus {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0, 135, 81, 0.15) !important;
+    }
+    
+    /* Button Enhancements */
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), #006b42);
+        box-shadow: 0 6px 20px rgba(0, 135, 81, 0.3);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #006b42, var(--primary-color));
+        box-shadow: 0 10px 30px rgba(0, 135, 81, 0.4);
+        transform: translateY(-2px) scale(1.02);
+    }
+    
+    .btn-primary:active {
+        transform: translateY(0) scale(0.98);
     }
     
     @media (max-width: 640px) {
         .form-card {
             margin: 0 -16px;
-            border-radius: 0;
-            border: none;
+            border-radius: 16px 16px 0 0;
         }
         
         .step-indicator {
-            width: 32px;
-            height: 32px;
-            font-size: 14px;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+        
+        .registration-hero {
+            padding: 2rem 0;
         }
     }
 </style>
 @endpush
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Registration Hero -->
+<div class="registration-hero">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="flex justify-center mb-4">
+            <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center shadow-xl">
+                <i class="bi bi-person-plus-fill text-white text-3xl"></i>
+            </div>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            {{ __('Join UMOJA Angola') }}
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            {{ __('Become part of our growing community. Registration takes less than 5 minutes.') }}
+        </p>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
     <!-- Progress Bar -->
     <div class="mb-8">
         <div class="flex justify-between items-center mb-4">
