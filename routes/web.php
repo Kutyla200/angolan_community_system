@@ -18,8 +18,8 @@ use App\Http\Controllers\RegistrationController;
 
 // Public routes (redirect to admin)
 Route::get('/', function () {
-    return redirect()->route('admin.login');
-});
+    return view('welcome');
+})->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +33,13 @@ Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('l
 Route::get('/register', [RegistrationController::class, 'index'])->name('registration');
 Route::post('/register', [RegistrationController::class, 'store'])->name('registration.store');
 
+
 Route::prefix('admin')->name('admin.')->group(function () {
     
     // Guest routes (not authenticated)
     Route::middleware('guest:admin')->group(function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [LoginController::class, 'login'])->name('login.post');
+Route::post('login', [LoginController::class, 'login'])->name('login.post');
     });
     
     // Logout route (authenticated)
