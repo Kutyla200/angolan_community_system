@@ -101,7 +101,7 @@
                                 <i class="bi bi-speedometer2 mr-1"></i>
                                 {{ __('Dashboard') }}
                             </a>
-                            <a href="{{ route('admin.members') }}" class="text-gray-700 hover:text-primary px-3 py-2">
+                            <a href="{{ route('admin.members.index') }}" class="text-gray-700 hover:text-primary px-3 py-2">
                                 <i class="bi bi-people mr-1"></i>
                                 {{ __('Members') }}
                             </a>
