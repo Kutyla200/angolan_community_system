@@ -839,20 +839,20 @@
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Secretary General') }}</h3>
-                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Kutyla Alfredo') }}</p>
+                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Marta Braz-Manuel') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
                         {{ __('Managing communications, documentation, and administrative operations.') }}
                     </p>
                     <div class="space-y-3">
-                        <a href="tel:+27843412464" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="tel:+27656141391" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-telephone-fill mr-2"></i>
-                            <span>+27 84 341 2464</span>
+                            <span>++27 65 614 1391</span>
                         </a>
-                        <a href="mailto:kutyla@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="mailto:marta@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-envelope-fill mr-2"></i>
-                            <span class="text-sm">kutyla@umoja-angola.org</span>
+                            <span class="text-sm">marta@umoja-angola.org</span>
                         </a>
-                        <a href="https://wa.me/27843412464" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="https://wa.me/27656141391" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-whatsapp mr-2"></i>
                             <span>{{ __('WhatsApp') }}</span>
                         </a>
@@ -883,8 +883,8 @@
                             <i class="bi bi-telephone-fill"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('Phone') }}</h4>
-                        <a href="tel:+27721935485" class="text-red-600 hover:text-red-800 transition font-semibold">
-                            +27 72 193 5485
+                        <a href="tel:+27843412464" class="text-red-600 hover:text-red-800 transition font-semibold">
+                            +27 84 341 2464
                         </a>
                     </div>
                     <div class="contact-card">
