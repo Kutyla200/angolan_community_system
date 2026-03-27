@@ -192,11 +192,7 @@
                     </button>
                 </form>
                 
-                <div class="text-center mt-4">
-                    <small class="text-muted">
-                        Default credentials: admin@angolancommunity.org / Admin@2024
-                    </small>
-                </div>
+                
             </div>
         </div>
         
