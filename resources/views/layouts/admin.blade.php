@@ -16,7 +16,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css'])
     
     <style>
@@ -25,411 +24,801 @@
             --secondary-color: #CC092F;
             --accent-color: #FFD100;
             --dark-color: #1a1a2e;
-            --light-color: #f8f9fa;
-            --sidebar-width: 250px;
+            --sidebar-width: 260px;
         }
         
+        /* ============================
+           SIDEBAR
+        ============================ */
         .sidebar {
             width: var(--sidebar-width);
-            transition: all 0.3s ease;
-            background: linear-gradient(180deg, var(--primary-color) 0%, #006d42 100%);
+            background: linear-gradient(180deg, #006b42 0%, #004d2f 100%);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
         }
+        
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         
         .main-content {
             margin-left: var(--sidebar-width);
-            transition: all 0.3s ease;
+            min-height: 100vh;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ============================
+           MOBILE OVERLAY
+        ============================ */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
         
         @media (max-width: 768px) {
             .sidebar {
-                width: 0;
-                position: fixed;
-                z-index: 1050;
                 transform: translateX(-100%);
             }
             
             .sidebar.open {
-                width: 250px;
                 transform: translateX(0);
+                box-shadow: 8px 0 32px rgba(0,0,0,0.3);
             }
             
             .main-content {
-                margin-left: 0;
-            }
-            
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 1040;
-            }
-            
-            .overlay.open {
-                display: block;
+                margin-left: 0 !important;
             }
         }
         
+        /* ============================
+           NAV LINKS
+        ============================ */
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
-            color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
+            padding: 10px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
             transition: all 0.2s ease;
             text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            position: relative;
+            overflow: hidden;
         }
         
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             color: white;
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
         
         .nav-link.active {
-            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            background: rgba(255, 255, 255, 0.18);
             color: white;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(204, 9, 47, 0.3);
+            box-shadow: inset 3px 0 0 var(--accent-color);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .nav-link button {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0;
         }
         
         .nav-section-title {
-            padding: 15px 20px 10px;
-            font-size: 11px;
-            font-weight: 600;
+            padding: 16px 16px 6px;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.6;
-            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.4);
         }
         
-        .nav-badge {
+        .nav-count {
             margin-left: auto;
+            background: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.9);
+            border-radius: 20px;
             padding: 2px 8px;
-            background: var(--secondary-color);
-            border-radius: 12px;
             font-size: 11px;
             font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .nav-count.new {
+            background: var(--secondary-color);
             color: white;
         }
         
+        /* ============================
+           SIDEBAR HEADER
+        ============================ */
+        .sidebar-header {
+            padding: 20px 16px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .sidebar-brand-icon img {
+            width: 34px;
+            height: 34px;
+            object-fit: cover;
+            border-radius: 7px;
+        }
+
+        .sidebar-brand-text {
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sidebar-brand-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* ============================
+           USER PROFILE IN SIDEBAR
+        ============================ */
+        .sidebar-user {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-user-role {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+        }
+        
+        /* ============================
+           LANGUAGE SWITCHER (SIDEBAR)
+        ============================ */
+        .sidebar-lang {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-lang span {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-right: 4px;
+        }
+
+        .lang-btn {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .lang-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .lang-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .lang-divider {
+            color: rgba(255,255,255,0.2);
+            font-size: 11px;
+        }
+
+        /* ============================
+           STAT CARDS
+        ============================ */
         .stat-card {
             background: white;
             border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+            transition: all 0.25s ease;
         }
         
         .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============================
+           CARD
+        ============================ */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
         }
         
+        /* ============================
+           BADGES
+        ============================ */
         .badge {
             display: inline-flex;
             align-items: center;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
         
         .badge-primary {
             background-color: rgba(0, 135, 81, 0.1);
-            color: var(--primary-color);
+            color: #006b42;
         }
         
         .badge-success {
             background-color: rgba(34, 197, 94, 0.1);
-            color: rgb(34, 197, 94);
+            color: #15803d;
         }
         
         .badge-warning {
             background-color: rgba(245, 158, 11, 0.1);
-            color: rgb(245, 158, 11);
+            color: #b45309;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
         }
         
-        .user-menu {
-            position: relative;
+        /* ============================
+           TOP HEADER
+        ============================ */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid #f0f0f0;
         }
-        
-        .user-dropdown {
+
+        /* ============================
+           USER DROPDOWN
+        ============================ */
+        .user-dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
             min-width: 220px;
             display: none;
-            z-index: 1000;
-            margin-top: 5px;
+            z-index: 200;
+            border: 1px solid #f0f0f0;
+            overflow: hidden;
         }
         
-        .user-dropdown.show {
+        .user-dropdown-menu.show {
             display: block;
+            animation: dropIn 0.2s ease;
+        }
+
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .user-dropdown-header {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f5f5f5;
+            background: #fafafa;
         }
         
         .user-dropdown-item {
-            padding: 12px 15px;
+            padding: 11px 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #333;
+            color: #374151;
             text-decoration: none;
-            transition: background 0.2s;
+            font-size: 14px;
+            transition: background 0.15s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
         }
         
         .user-dropdown-item:hover {
-            background: #f5f6fa;
+            background: #f9fafb;
+        }
+
+        .user-dropdown-item.danger {
+            color: #dc2626;
+        }
+
+        .user-dropdown-item.danger:hover {
+            background: #fef2f2;
         }
         
+        /* ============================
+           HEADER ICON BTN
+        ============================ */
         .header-icon {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 10px;
             background: #f5f6fa;
-            color: #666;
+            color: #6b7280;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            border: 1px solid transparent;
         }
         
         .header-icon:hover {
-            background: var(--primary-color);
+            background: #008751;
             color: white;
+            border-color: transparent;
         }
         
-        .header-icon .badge {
+        .header-icon .notif-dot {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
             background: var(--secondary-color);
-            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* ============================
+           SIDEBAR FOOTER
+        ============================ */
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 12px 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer p {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+        }
+
+        /* ============================
+           MAIN CONTENT AREA
+        ============================ */
+        .page-main {
+            flex: 1;
+            padding: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .page-main {
+                padding: 16px;
+            }
+        }
+
+        /* ============================
+           ALERTS
+        ============================ */
+        .alert-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 4px solid #22c55e;
             border-radius: 10px;
-            padding: 2px 6px;
-            font-size: 10px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-left: 4px solid #ef4444;
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================
+           HAMBURGER BUTTON
+        ============================ */
+        .hamburger {
+            display: none;
+            padding: 8px;
+            border-radius: 8px;
+            background: #f5f6fa;
+            border: none;
+            cursor: pointer;
+            color: #374151;
+            transition: background 0.2s;
+        }
+
+        .hamburger:hover { background: #e5e7eb; }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; align-items: center; justify-content: center; }
+        }
+
+        /* ============================
+           SEARCH BAR
+        ============================ */
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 8px 12px 8px 36px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #f9fafb;
+            color: #374151;
+            outline: none;
+            transition: all 0.2s;
+            width: 220px;
+        }
+
+        .search-bar input:focus {
+            background: white;
+            border-color: #008751;
+            box-shadow: 0 0 0 3px rgba(0,135,81,0.1);
+            width: 260px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 640px) {
+            .search-bar { display: none; }
         }
     </style>
     
     @stack('styles')
 </head>
 <body class="font-sans antialiased bg-gray-50">
-    <!-- Mobile Overlay -->
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Mobile Overlay - clicking this closes sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
     
     <!-- Sidebar -->
-    <aside class="sidebar bg-white h-screen fixed left-0 top-0 shadow-lg overflow-y-auto" id="sidebar">
-        <!-- Logo -->
-        <div class="sidebar-header p-6 border-b border-white/10">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center">
-                    <i class="bi bi-flag text-white"></i>
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+        
+        <!-- Brand -->
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('umoja.jpeg') }}" alt="UMOJA Logo">
                 </div>
-                <div>
-                    <span class="text-xl font-bold text-white">
-                        {{ config('app.name') }}
-                    </span>
-                    <p class="text-sm text-white/80">{{ __('Admin Portal') }}</p>
+                <div class="sidebar-brand-text">
+                    <div class="sidebar-brand-name">UMOJA Angola</div>
+                    <div class="sidebar-brand-sub">Admin Portal</div>
                 </div>
             </div>
         </div>
         
-        <!-- User Profile -->
-        <div class="p-4 border-b border-white/10">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                    <span class="text-white font-bold text-lg">
-                        {{ strtoupper(substr(auth('admin')->user()->name, 0, 2)) }}
-                    </span>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="font-medium text-white truncate">{{ auth('admin')->user()->name }}</p>
-                    <p class="text-sm text-white/80 capitalize">{{ auth('admin')->user()->role }}</p>
-                </div>
-            </div>
+    
+
+        <!-- Language Switcher -->
+        <div class="sidebar-lang">
+            <span><i class="bi bi-translate"></i> Lang:</span>
+            <a href="{{ route('language.switch', 'en') }}" 
+               class="lang-btn {{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+            <span class="lang-divider">|</span>
+            <a href="{{ route('language.switch', 'pt') }}" 
+               class="lang-btn {{ app()->getLocale() === 'pt' ? 'active' : '' }}">PT</a>
         </div>
         
         <!-- Navigation -->
-        <nav class="sidebar-nav p-4 space-y-1">
-            <div class="nav-section-title">{{ __('Main Menu') }}</div>
+        <nav class="flex-1 px-3 py-4" role="menu">
+            <div class="nav-section-title">{{ __('Main') }}</div>
             
             <a href="{{ route('admin.dashboard') }}" 
-               class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="bi bi-speedometer2 mr-3"></i>
+               class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+               role="menuitem">
+                <i class="bi bi-speedometer2"></i>
                 {{ __('Dashboard') }}
+                <span class="nav-count">{{ \App\Models\Member::whereDate('created_at', today())->count() }} today</span>
             </a>
             
             <a href="{{ route('admin.members.index') }}" 
-               class="nav-link {{ request()->routeIs('admin.members*') ? 'active' : '' }}">
-                <i class="bi bi-people mr-3"></i>
+               class="nav-link {{ request()->routeIs('admin.members*') ? 'active' : '' }}"
+               role="menuitem">
+                <i class="bi bi-people"></i>
                 {{ __('Members') }}
-                @if(isset($newMembersCount) && $newMembersCount > 0)
-                    <span class="nav-badge">{{ $newMembersCount }}</span>
-                @else
-                    <span class="ml-auto bg-white/20 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                        {{ \App\Models\Member::count() }}
-                    </span>
-                @endif
+                <span class="nav-count">{{ \App\Models\Member::count() }}</span>
             </a>
             
             <a href="{{ route('admin.analytics') }}" 
-               class="nav-link {{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
-                <i class="bi bi-bar-chart mr-3"></i>
+               class="nav-link {{ request()->routeIs('admin.analytics') ? 'active' : '' }}"
+               role="menuitem">
+                <i class="bi bi-bar-chart-line"></i>
                 {{ __('Analytics') }}
             </a>
             
-            <div class="nav-section-title mt-6">{{ __('Management') }}</div>
+            <div class="nav-section-title mt-4">{{ __('Data') }}</div>
             
-            <a href="{{ route('admin.export.csv') }}" class="nav-link">
-                <i class="bi bi-download mr-3"></i>
-                {{ __('Export Data') }}
+            <a href="{{ route('admin.export.csv') }}" class="nav-link" role="menuitem">
+                <i class="bi bi-download"></i>
+                {{ __('Export CSV') }}
+            </a>
+
+            <a href="{{ route('admin.export.pdf') }}" class="nav-link" role="menuitem">
+                <i class="bi bi-file-earmark-pdf"></i>
+                {{ __('Export PDF') }}
             </a>
             
             <a href="{{ route('admin.logs.index') }}" 
-               class="nav-link {{ request()->routeIs('admin.logs*') ? 'active' : '' }}">
-                <i class="bi bi-clock-history mr-3"></i>
+               class="nav-link {{ request()->routeIs('admin.logs*') ? 'active' : '' }}"
+               role="menuitem">
+                <i class="bi bi-clock-history"></i>
                 {{ __('Audit Logs') }}
             </a>
             
-            <div class="nav-section-title mt-6">{{ __('System') }}</div>
+            <div class="nav-section-title mt-4">{{ __('System') }}</div>
             
             @if(auth('admin')->user()->canManageSettings())
             <a href="{{ route('admin.settings.index') }}" 
-               class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
-                <i class="bi bi-gear mr-3"></i>
+               class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}"
+               role="menuitem">
+                <i class="bi bi-gear"></i>
                 {{ __('Settings') }}
             </a>
             @endif
-            
-            <div class="nav-section-title mt-6">{{ __('Account') }}</div>
-            
-            <a href="#" class="nav-link">
-                <i class="bi bi-person mr-3"></i>
-                {{ __('My Profile') }}
+
+            <a href="{{ url('/') }}" class="nav-link" role="menuitem" target="_blank">
+                <i class="bi bi-box-arrow-up-right"></i>
+                {{ __('View Site') }}
             </a>
             
-            <form method="POST" action="{{ route('admin.logout') }}" id="logout-form" class="inline">
+            <form method="POST" action="{{ route('admin.logout') }}" id="logout-form">
                 @csrf
-                <button type="submit" class="nav-link w-full text-left">
-                    <i class="bi bi-box-arrow-right mr-3"></i>
+                <a href="#" class="nav-link" role="menuitem"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="bi bi-box-arrow-right"></i>
                     {{ __('Logout') }}
-                </button>
+                </a>
             </form>
         </nav>
         
-        <!-- Footer -->
-        <div class="p-4 border-t border-white/10 mt-auto">
-            <div class="text-center text-xs text-white/60">
-                <p>{{ __('Version') }} 1.0.0</p>
-                <p class="mt-1">&copy; {{ date('Y') }} {{ config('app.name') }}</p>
-            </div>
+        <div class="sidebar-footer">
+            <p>v1.0.0 &copy; {{ date('Y') }} UMOJA Angola</p>
         </div>
     </aside>
     
     <!-- Main Content -->
-    <div class="main-content min-h-screen">
-        <!-- Top Bar -->
-        <header class="bg-white shadow-sm border-b">
-            <div class="flex items-center justify-between px-6 py-4">
-                <div class="flex items-center">
-                    <button id="sidebar-toggle" 
-                            class="p-2 rounded-lg hover:bg-gray-100 md:hidden"
-                            onclick="toggleSidebar()">
+    <div class="main-content" id="main-content">
+        
+        <!-- Top Header -->
+        <header class="top-header" role="banner">
+            <div class="flex items-center justify-between px-5 py-3 gap-3">
+                
+                <!-- Left: Hamburger + Breadcrumb -->
+                <div class="flex items-center gap-3">
+                    <button class="hamburger" id="hamburger-btn" 
+                            aria-label="Toggle navigation" 
+                            aria-expanded="false"
+                            aria-controls="sidebar">
                         <i class="bi bi-list text-xl"></i>
                     </button>
                     
-                    <nav class="ml-4" aria-label="breadcrumb">
-                        <ol class="flex items-center space-x-2 text-sm">
-                            <li class="text-gray-600">
-                                <a href="{{ route('admin.dashboard') }}" class="hover:text-primary">
-                                    <i class="bi bi-house-door mr-1"></i>
-                                    {{ __('Home') }}
+                    <nav aria-label="Breadcrumb" class="hidden sm:block">
+                        <ol class="flex items-center gap-2 text-sm text-gray-500">
+                            <li>
+                                <a href="{{ route('admin.dashboard') }}" class="hover:text-green-700 flex items-center gap-1">
+                                    <i class="bi bi-house-door text-xs"></i>
+                                    <span class="hidden md:inline">{{ __('Home') }}</span>
                                 </a>
                             </li>
                             @hasSection('breadcrumb')
-                                <li class="text-gray-400">/</li>
+                                <li class="text-gray-300">/</li>
                                 @yield('breadcrumb')
                             @endif
                         </ol>
                     </nav>
                 </div>
                 
-                <div class="flex items-center space-x-4">
-                    <!-- Search Bar -->
-                    <div class="hidden md:block relative">
-                        <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" 
-                               placeholder="{{ __('Search members...') }}" 
-                               class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                               id="globalSearch"
-                               onkeypress="handleSearch(event)">
-                    </div>
+                <!-- Right: Search + Actions + User -->
+                <div class="flex items-center gap-3">
                     
-                    <!-- Language Switcher -->
-                    <div class="hidden md:flex items-center space-x-2">
-                        <span class="text-sm text-gray-600">
-                            <i class="bi bi-translate mr-1"></i>
-                        </span>
-                        <a href="{{ route('language.switch', 'en') }}" 
-                           class="text-sm px-3 py-1 rounded {{ app()->getLocale() === 'en' ? 'bg-primary text-white' : 'text-gray-600 hover:text-primary' }}">
-                            EN
-                        </a>
-                        <span class="text-gray-300">|</span>
-                        <a href="{{ route('language.switch', 'pt') }}" 
-                           class="text-sm px-3 py-1 rounded {{ app()->getLocale() === 'pt' ? 'bg-primary text-white' : 'text-gray-600 hover:text-primary' }}">
-                            PT
-                        </a>
+                    <!-- Search -->
+                    <div class="search-bar">
+                        <i class="bi bi-search"></i>
+                        <input type="text" 
+                               placeholder="{{ __('Search members...') }}"
+                               id="globalSearch"
+                               aria-label="Search members"
+                               onkeypress="if(event.key==='Enter') window.location='/admin/members?search='+encodeURIComponent(this.value)">
                     </div>
                     
                     <!-- Notifications -->
-                    <button class="header-icon relative" onclick="toggleNotifications()">
-                        <i class="bi bi-bell text-lg"></i>
-                        <span class="badge">3</span>
+                    <button class="header-icon" aria-label="Notifications" title="Notifications">
+                        <i class="bi bi-bell text-base"></i>
+                        <span class="notif-dot" aria-hidden="true"></span>
                     </button>
                     
                     <!-- User Menu -->
-                    <div class="user-menu" x-data="{ open: false }">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center cursor-pointer"
-                             @click="open = !open">
-                            <span class="text-white font-bold">
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open"
+                                class="flex items-center gap-2 px-3 py-2 rounded-10 hover:bg-gray-50 transition border border-transparent hover:border-gray-200"
+                                aria-haspopup="true"
+                                :aria-expanded="open">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
                                 {{ strtoupper(substr(auth('admin')->user()->name, 0, 2)) }}
-                            </span>
-                        </div>
+                            </div>
+                            <div class="hidden md:block text-left">
+                                <p class="text-sm font-semibold text-gray-800 leading-tight">{{ auth('admin')->user()->name }}</p>
+                                <p class="text-xs text-gray-500 leading-tight">{{ ucfirst(auth('admin')->user()->role) }}</p>
+                            </div>
+                            <i class="bi bi-chevron-down text-xs text-gray-400 hidden md:block" :class="{ 'rotate-180': open }"></i>
+                        </button>
                         
-                        <div class="user-dropdown" :class="{ 'show': open }" @click.away="open = false">
+                        <div class="user-dropdown-menu" :class="{ 'show': open }" @click.away="open = false" role="menu">
                             <div class="user-dropdown-header">
-                                <h6 class="font-semibold">{{ auth('admin')->user()->name }}</h6>
-                                <p class="text-sm text-gray-600 mt-1">{{ auth('admin')->user()->email }}</p>
-                                <span class="inline-block mt-2 px-2 py-1 text-xs bg-primary/10 text-primary rounded">
-                                    {{ auth('admin')->user()->role_name ?? auth('admin')->user()->role }}
+                                <p class="font-semibold text-gray-900 text-sm">{{ auth('admin')->user()->name }}</p>
+                                <p class="text-xs text-gray-500 mt-0.5">{{ auth('admin')->user()->email }}</p>
+                                <span class="inline-block mt-2 px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded-full font-medium">
+                                    {{ ucfirst(str_replace('_', ' ', auth('admin')->user()->role)) }}
                                 </span>
                             </div>
-                            <a href="#" class="user-dropdown-item">
-                                <i class="bi bi-person"></i>
-                                {{ __('My Profile') }}
-                            </a>
-                            <a href="{{ route('admin.settings.index') }}" class="user-dropdown-item">
-                                <i class="bi bi-gear"></i>
-                                {{ __('Settings') }}
-                            </a>
-                            <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-box-arrow-right"></i>
-                                {{ __('Logout') }}
-                            </a>
+                            
+                            <div class="py-1">
+                                @if(auth('admin')->user()->canManageSettings())
+                                <a href="{{ route('admin.settings.index') }}" class="user-dropdown-item" role="menuitem">
+                                    <i class="bi bi-gear text-gray-400"></i>
+                                    {{ __('Settings') }}
+                                </a>
+                                @endif
+                                
+                                <!-- Language in header dropdown too -->
+                                <div class="px-4 py-2 border-t border-gray-50">
+                                    <p class="text-xs text-gray-400 mb-2 font-medium uppercase tracking-wide">{{ __('Language') }}</p>
+                                    <div class="flex gap-2">
+                                        <a href="{{ route('language.switch', 'en') }}" 
+                                           class="flex-1 text-center py-1.5 rounded-lg text-xs font-semibold transition {{ app()->getLocale() === 'en' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                                            🇬🇧 EN
+                                        </a>
+                                        <a href="{{ route('language.switch', 'pt') }}" 
+                                           class="flex-1 text-center py-1.5 rounded-lg text-xs font-semibold transition {{ app()->getLocale() === 'pt' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                                            🇦🇴 PT
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-gray-100 mt-1">
+                                    <button onclick="document.getElementById('logout-form').submit()" 
+                                            class="user-dropdown-item danger w-full"
+                                            role="menuitem">
+                                        <i class="bi bi-box-arrow-right text-red-400"></i>
+                                        {{ __('Logout') }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -437,56 +826,55 @@
         </header>
         
         <!-- Page Content -->
-        <main class="p-6">
+        <main class="page-main" id="page-content">
+            
+            <!-- Flash Messages -->
             @if(session('success'))
-            <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center justify-between">
-                <div class="flex items-center">
-                    <i class="bi bi-check-circle text-green-600 mr-3"></i>
-                    <span class="text-green-800">{{ session('success') }}</span>
+            <div class="alert-success" role="alert" id="alert-success">
+                <div class="flex items-center gap-3">
+                    <i class="bi bi-check-circle-fill text-green-600 text-lg flex-shrink-0"></i>
+                    <span class="text-green-800 text-sm font-medium">{{ session('success') }}</span>
                 </div>
-                <button type="button" class="text-green-600 hover:text-green-800" onclick="this.parentElement.remove()">
+                <button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 flex-shrink-0" aria-label="Dismiss">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
             @endif
             
             @if(session('error'))
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
-                <div class="flex items-center">
-                    <i class="bi bi-exclamation-circle text-red-600 mr-3"></i>
-                    <span class="text-red-800">{{ session('error') }}</span>
+            <div class="alert-error" role="alert" id="alert-error">
+                <div class="flex items-start gap-3">
+                    <i class="bi bi-exclamation-circle-fill text-red-500 text-lg flex-shrink-0 mt-0.5"></i>
+                    <span class="text-red-800 text-sm font-medium">{{ session('error') }}</span>
                 </div>
-                <button type="button" class="text-red-600 hover:text-red-800" onclick="this.parentElement.remove()">
+                <button onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-600 flex-shrink-0 ml-3" aria-label="Dismiss">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
             @endif
             
             @if($errors->any())
-                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <div class="flex items-center mb-2">
-                        <i class="bi bi-exclamation-triangle text-red-600 mr-3"></i>
-                        <span class="text-red-800 font-semibold">{{ __('Please fix the following errors:') }}</span>
+            <div class="alert-error" role="alert">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="bi bi-exclamation-triangle-fill text-red-500 text-lg"></i>
+                        <span class="text-red-800 text-sm font-semibold">{{ __('Please fix the following errors:') }}</span>
                     </div>
-                    <ul class="text-red-700 text-sm list-disc pl-5 space-y-1">
+                    <ul class="text-red-700 text-sm list-disc pl-8 space-y-0.5">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
+            </div>
             @endif
             
-            <!-- Breadcrumb content section -->
+            <!-- Page Header -->
             @hasSection('page-header')
-                <div class="page-header mb-6">
-                    @yield('page-header')
-                </div>
+                <div class="mb-6">@yield('page-header')</div>
             @else
-                <h1 class="text-2xl font-bold text-gray-900 mb-2">
-                    @yield('header', __('Dashboard'))
-                </h1>
-                @hasSection('page-subtitle')
-                    <p class="text-gray-600 mb-6">@yield('page-subtitle')</p>
+                @hasSection('header')
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">@yield('header')</h1>
                 @endif
             @endif
             
@@ -496,94 +884,121 @@
     
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
-    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('open');
+    // ============================
+    // SIDEBAR TOGGLE — FIXED
+    // ============================
+    (function() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const hamburger = document.getElementById('hamburger-btn');
+        
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // prevent scroll behind overlay
         }
         
-        function handleSearch(event) {
-            if (event.key === 'Enter') {
-                const searchTerm = event.target.value;
-                window.location.href = '/admin/members?search=' + encodeURIComponent(searchTerm);
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+        
+        function toggleSidebar() {
+            if (sidebar.classList.contains('open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
             }
         }
         
-        function toggleNotifications() {
-            // Implement notification dropdown logic here
-            console.log('Toggle notifications');
-        }
-        
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const overlay = document.getElementById('overlay');
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking a link on mobile
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        toggleSidebar();
-                    }
-                });
-            });
-            
-            // Auto-hide alerts after 5 seconds
-            setTimeout(() => {
-                document.querySelectorAll('.bg-green-50, .bg-red-50').forEach(alert => {
-                    alert.style.transition = 'opacity 0.3s ease';
-                    alert.style.opacity = '0';
-                    setTimeout(() => {
-                        if (alert.parentNode) {
-                            alert.parentNode.removeChild(alert);
-                        }
-                    }, 300);
-                });
-            }, 5000);
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSidebar();
         });
         
-        // Confirm delete function
-        function confirmDelete(action, type = 'item') {
-            Swal.fire({
-                title: '{{ __("Are you sure?") }}',
-                text: `{{ __("You are about to delete this") }} ${type}. {{ __("This action cannot be undone.") }}`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: '{{ __("Yes, delete") }}',
-                cancelButtonText: '{{ __("Cancel") }}',
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = action;
+        // Overlay click closes sidebar
+        overlay.addEventListener('click', closeSidebar);
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+        
+        // Close when nav link clicked on mobile
+        sidebar.querySelectorAll('.nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeSidebar();
                 }
             });
-        }
+        });
+    })();
+    
+    // ============================
+    // AUTO-DISMISS ALERTS
+    // ============================
+    setTimeout(function() {
+        ['alert-success', 'alert-error'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-8px)';
+                setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+            }
+        });
+    }, 5000);
+    
+    // ============================
+    // EXPORT HELPER
+    // ============================
+    function exportData(format) {
+        const url = format === 'csv' 
+            ? '{{ route("admin.export.csv") }}' 
+            : '{{ route("admin.export.pdf") }}';
         
-        // Export function
-        function exportData(format) {
-            let url = format === 'csv' 
-                ? '{{ route("admin.export.csv") }}' 
-                : '{{ route("admin.export.pdf") }}';
-            
-            Swal.fire({
-                title: '{{ __("Exporting Data") }}',
-                text: '{{ __("Please wait while we prepare your file...") }}',
-                icon: 'info',
-                showConfirmButton: false,
-                allowOutsideClick: false
-            });
-            
+        Swal.fire({
+            title: '{{ __("Exporting Data") }}',
+            text: '{{ __("Please wait while we prepare your file...") }}',
+            icon: 'info',
+            showConfirmButton: false,
+            timer: 1500,
+            allowOutsideClick: false
+        }).then(function() {
             window.location.href = url;
-        }
+        });
+    }
+
+    // ============================
+    // CONFIRM DELETE HELPER
+    // ============================
+    function confirmDelete(action, type) {
+        type = type || 'item';
+        Swal.fire({
+            title: '{{ __("Are you sure?") }}',
+            text: 'You are about to delete this ' + type + '. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '{{ __("Yes, delete") }}',
+            cancelButtonText: '{{ __("Cancel") }}',
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                window.location.href = action;
+            }
+        });
+    }
     </script>
     
     @stack('scripts')
