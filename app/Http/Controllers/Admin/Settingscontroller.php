@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 class SettingsController extends Controller
 {
     /**
-     * Display settings  page 
+     * Display settings page 
      */
     public function index()
     {
