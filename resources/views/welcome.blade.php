@@ -548,77 +548,85 @@
 <!-- About Section -->
 <section id="about" class="section about-section" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: linear-gradient(to bottom, #ffffff, #f8f9fa, #ffffff);">
     <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+        
+        <!-- Header -->
         <div class="text-center mb-16 animate-on-scroll">
             <span class="badge-primary mb-4 inline-block">{{ __('About UMOJA') }}</span>
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
                 {{ __('Who We Are') }}
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                {{ __('UMOJA Angola is a community organization dedicated to uniting and empowering Angolans living in South Africa. We believe in the power of unity, mutual support, and collective growth.') }}
+                {{ __('UMOJA Angola is a community organization dedicated to uniting and empowering Angolans living in South Africa, promoting unity, mutual support, and collective growth.') }}
             </p>
         </div>
         
+        <!-- Mission & Vision -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Mission -->
             <div class="about-card animate-on-scroll">
                 <div class="flex items-center mb-6">
                     <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mr-4">
                         <i class="bi bi-bullseye text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-gray-900">{{ __('Our Mission') }}</h3>
+                    <h3 class="text-2xl font-black text-gray-900">{{ __('Mission') }}</h3>
                 </div>
                 <p class="text-gray-700 text-lg leading-relaxed">
-                    {{ __('To create a strong, united, and supportive network of Angolans in South Africa, fostering community cohesion, cultural preservation, and mutual assistance for the betterment of all members.') }}
+                    {{ __('Promote unity, mutual support, and the development of Angolans in South Africa, valuing our cultural identity and contributing to a more inclusive society.') }}
                 </p>
             </div>
             
+            <!-- Vision -->
             <div class="about-card animate-on-scroll">
                 <div class="flex items-center mb-6">
                     <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center mr-4">
                         <i class="bi bi-eye text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-gray-900">{{ __('Our Vision') }}</h3>
+                    <h3 class="text-2xl font-black text-gray-900">{{ __('Vision') }}</h3>
                 </div>
                 <p class="text-gray-700 text-lg leading-relaxed">
-                    {{ __('A thriving, self-sufficient Angolan community in South Africa where every member has access to support, opportunities, and resources needed to succeed and contribute to both the Angolan and South African societies.') }}
+                    {{ __('To be a reference for unity, solidarity, and positive impact in the Angolan diaspora.') }}
                 </p>
             </div>
         </div>
         
-        <!-- Objectives -->
+        <!-- Values -->
         <div class="about-card animate-on-scroll">
             <div class="flex items-center mb-8">
                 <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mr-4">
-                    <i class="bi bi-list-check text-white text-2xl"></i>
+                    <i class="bi bi-heart text-white text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-black text-gray-900">{{ __('Our Objectives') }}</h3>
+                <h3 class="text-2xl font-black text-gray-900">{{ __('Values') }}</h3>
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Promote unity and solidarity among Angolans in South Africa') }}</span>
+                    <span class="text-gray-700">{{ __('Unity') }}</span>
                 </div>
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Provide support and assistance to community members in need') }}</span>
+                    <span class="text-gray-700">{{ __('Solidarity') }}</span>
                 </div>
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Facilitate skills sharing, job opportunities, and professional networking') }}</span>
+                    <span class="text-gray-700">{{ __('Respect') }}</span>
                 </div>
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Preserve and promote Angolan culture and heritage') }}</span>
+                    <span class="text-gray-700">{{ __('Cultural Identity') }}</span>
                 </div>
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Advocate for the rights and interests of Angolan community members') }}</span>
+                    <span class="text-gray-700">{{ __('Inclusion') }}</span>
                 </div>
                 <div class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                     <i class="bi bi-check-circle-fill text-green-600 text-xl mr-3 mt-1"></i>
-                    <span class="text-gray-700">{{ __('Build bridges between the Angolan and South African communities') }}</span>
+                    <span class="text-gray-700">{{ __('Cooperation') }}</span>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
@@ -775,20 +783,20 @@
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('President') }}</h3>
-                    <p class="text-green-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-green-600 font-bold mb-4 text-lg">{{ __('Emanuel Ginga') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
                         {{ __('Leading the organization with vision and dedication to unite the Angolan community.') }}
                     </p>
                     <div class="space-y-3">
-                        <a href="tel:+27123456789" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                        <a href="tel:+27721935485" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
                             <i class="bi bi-telephone-fill mr-2"></i>
-                            <span>+27 12 345 6789</span>
+                            <span>+27 72 193 5485</span>
                         </a>
-                        <a href="mailto:president@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                        <a href="mailto:ginga@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
                             <i class="bi bi-envelope-fill mr-2"></i>
-                            <span class="text-sm">president@umojaangola.org</span>
+                            <span class="text-sm">ginga@umoja-angola.org</span>
                         </a>
-                        <a href="https://wa.me/27123456789" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
+                        <a href="https://wa.me/27721935485" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-green-600 transition font-medium">
                             <i class="bi bi-whatsapp mr-2"></i>
                             <span>{{ __('WhatsApp') }}</span>
                         </a>
@@ -803,20 +811,20 @@
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Vice President') }}</h3>
-                    <p class="text-red-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-red-600 font-bold mb-4 text-lg">{{ __('Bongu Sabata') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
                         {{ __('Supporting community initiatives and coordinating member engagement activities.') }}
                     </p>
                     <div class="space-y-3">
-                        <a href="tel:+27123456790" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                        <a href="tel:+27711333790" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
                             <i class="bi bi-telephone-fill mr-2"></i>
-                            <span>+27 12 345 6790</span>
+                            <span>+27 71 133 3739</span>
                         </a>
-                        <a href="mailto:vicepresident@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                        <a href="mailto:sabata@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
                             <i class="bi bi-envelope-fill mr-2"></i>
-                            <span class="text-sm">vicepresident@umojaangola.org</span>
+                            <span class="text-sm">sabata@umoja-angola.org</span>
                         </a>
-                        <a href="https://wa.me/27123456790" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
+                        <a href="https://wa.me/27711333790" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-red-600 transition font-medium">
                             <i class="bi bi-whatsapp mr-2"></i>
                             <span>{{ __('WhatsApp') }}</span>
                         </a>
@@ -831,20 +839,20 @@
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Secretary General') }}</h3>
-                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Name Surname') }}</p>
+                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Kutyla Alfredo') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
                         {{ __('Managing communications, documentation, and administrative operations.') }}
                     </p>
                     <div class="space-y-3">
-                        <a href="tel:+27123456791" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="tel:+27843412464" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-telephone-fill mr-2"></i>
-                            <span>+27 12 345 6791</span>
+                            <span>+27 84 341 2464</span>
                         </a>
-                        <a href="mailto:secretary@umojaangola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="mailto:kutyla@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-envelope-fill mr-2"></i>
-                            <span class="text-sm">secretary@umojaangola.org</span>
+                            <span class="text-sm">kutyla@umoja-angola.org</span>
                         </a>
-                        <a href="https://wa.me/27123456791" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                        <a href="https://wa.me/27843412464" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-whatsapp mr-2"></i>
                             <span>{{ __('WhatsApp') }}</span>
                         </a>
@@ -866,8 +874,8 @@
                             <i class="bi bi-envelope-fill"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('Email') }}</h4>
-                        <a href="mailto:info@umojaangola.org" class="text-green-600 hover:text-green-800 transition font-semibold">
-                            info@umojaangola.org
+                        <a href="mailto:info@umoja-angola.org" class="text-green-600 hover:text-green-800 transition font-semibold">
+                            info@umoja-angola.org
                         </a>
                     </div>
                     <div class="contact-card">
@@ -875,8 +883,8 @@
                             <i class="bi bi-telephone-fill"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('Phone') }}</h4>
-                        <a href="tel:+27123456789" class="text-red-600 hover:text-red-800 transition font-semibold">
-                            +27 12 345 6789
+                        <a href="tel:+27721935485" class="text-red-600 hover:text-red-800 transition font-semibold">
+                            +27 72 193 5485
                         </a>
                     </div>
                     <div class="contact-card">
@@ -884,7 +892,7 @@
                             <i class="bi bi-whatsapp"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('WhatsApp') }}</h4>
-                        <a href="https://wa.me/27123456789" target="_blank" class="text-green-600 hover:text-green-800 transition font-semibold">
+                        <a href="https://wa.me/27721935485" target="_blank" class="text-green-600 hover:text-green-800 transition font-semibold">
                             {{ __('Send Message') }}
                         </a>
                     </div>
