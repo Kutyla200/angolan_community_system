@@ -398,15 +398,15 @@
                         <div class="space-y-3">
                             <p class="text-gray-300 flex items-center">
                                 <i class="bi bi-envelope mr-2 text-accent"></i>
-                                <a href="mailto:info@umojaangola.org" class="hover:text-white transition">info@umojaangola.org</a>
+                                <a href="mailto:info@umoja-angola.org" class="hover:text-white transition">info@umoja-angola.org</a>
                             </p>
                             <p class="text-gray-300 flex items-center">
                                 <i class="bi bi-telephone mr-2 text-accent"></i>
-                                <a href="tel:+27123456789" class="hover:text-white transition">+27 12 345 6789</a>
+                                <a href="tel:+27843412464" class="hover:text-white transition">+27 84 341 2464</a>
                             </p>
                             <p class="text-gray-300 flex items-center">
                                 <i class="bi bi-whatsapp mr-2 text-green-400"></i>
-                                <a href="https://wa.me/27123456789" target="_blank" class="hover:text-white transition">{{ __('WhatsApp') }}</a>
+                                <a href="https://wa.me/27843412464" target="_blank" class="hover:text-white transition">{{ __('WhatsApp') }}</a>
                             </p>
                         </div>
                     </div>
