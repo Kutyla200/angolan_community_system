@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: angolan-community-system
+    env: php
+    buildCommand: composer run setup
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PHP_VERSION
+        value: 8.2
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
