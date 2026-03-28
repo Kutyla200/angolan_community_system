@@ -846,7 +846,7 @@
                     <div class="space-y-3">
                         <a href="tel:+27656141391" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-telephone-fill mr-2"></i>
-                            <span>++27 65 614 1391</span>
+                            <span>+27 65 614 1391</span>
                         </a>
                         <a href="mailto:marta@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
                             <i class="bi bi-envelope-fill mr-2"></i>
