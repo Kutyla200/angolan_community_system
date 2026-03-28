@@ -866,7 +866,7 @@
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Tresurer') }}</h3>
                     <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Carlos Neto') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
-                        {{ __('Managing all finance of the organisation and securing sposorship of the organisation.') }}
+                        {{ __('Managing all finance  and securing sposorship of the organisation.') }}
                     </p>
                     <div class="space-y-3">
                         <a href="tel:+27781210374" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
