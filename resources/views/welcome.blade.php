@@ -893,7 +893,7 @@
                     <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Media Coordinator') }}</h3>
                     <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Kutyla Alfredo') }}</p>
                     <p class="text-gray-600 mb-6 min-h-[60px]">
-                        {{ __('Managing communications, documentation, and administrative operations.') }}
+                        {{ __('Managing communications and all media activities of the organisation.') }}
                     </p>
                     <div class="space-y-3">
                         <a href="tel:+27843412464" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
