@@ -831,8 +831,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Leader 3 -->
             <div class="leader-card animate-on-scroll">
                 <div class="leader-card-inner text-center">
                     <div class="leader-avatar bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-5xl font-bold">
@@ -859,6 +857,62 @@
                     </div>
                 </div>
             </div>
+            <!-- Leader 4 -->
+            <div class="leader-card animate-on-scroll">
+                <div class="leader-card-inner text-center">
+                    <div class="leader-avatar bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-5xl font-bold">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Tresurer') }}</h3>
+                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Carlos Neto') }}</p>
+                    <p class="text-gray-600 mb-6 min-h-[60px]">
+                        {{ __('Managing all finance if the organisation and securing sposorship of the organisation.') }}
+                    </p>
+                    <div class="space-y-3">
+                        <a href="tel:+27781210374" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-telephone-fill mr-2"></i>
+                            <span>+27 78 121 0374</span>
+                        </a>
+                        <a href="mailto:neto@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-envelope-fill mr-2"></i>
+                            <span class="text-sm">neto@umoja-angola.org</span>
+                        </a>
+                        <a href="https://wa.me/27781210374" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-whatsapp mr-2"></i>
+                            <span>{{ __('WhatsApp') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+             <!-- Leader 5 -->
+            <div class="leader-card animate-on-scroll">
+                <div class="leader-card-inner text-center">
+                    <div class="leader-avatar bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-5xl font-bold">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2">{{ __('Media Coordinator') }}</h3>
+                    <p class="text-yellow-600 font-bold mb-4 text-lg">{{ __('Kutyla Alfredo') }}</p>
+                    <p class="text-gray-600 mb-6 min-h-[60px]">
+                        {{ __('Managing communications, documentation, and administrative operations.') }}
+                    </p>
+                    <div class="space-y-3">
+                        <a href="tel:+27843412464" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-telephone-fill mr-2"></i>
+                            <span>+27 84 341 2464</span>
+                        </a>
+                        <a href="mailto:kutyla@umoja-angola.org" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-envelope-fill mr-2"></i>
+                            <span class="text-sm">kutyla@umoja-angola.org</span>
+                        </a>
+                        <a href="https://wa.me/27843412464" target="_blank" class="flex items-center justify-center text-gray-700 hover:text-yellow-600 transition font-medium">
+                            <i class="bi bi-whatsapp mr-2"></i>
+                            <span>{{ __('WhatsApp') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+             <!-- Leader 3 -->
+            
         </div>
         
         <!-- General Contact -->
