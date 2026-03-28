@@ -1,37 +1,35 @@
-# Use PHP 8.2 with Apache
+# 1. Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# 1. Install system dependencies & PHP extensions
+# 2. Install system dependencies & PHP extensions for MySQL and Images (GD)
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git curl libpng-dev \
+    libzip-dev zip unzip git curl libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql zip gd
 
-# 2. Install Node.js (Required to run Vite)
+# 3. Install Node.js 20 (This is what runs Vite and Tailwind)
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Enable Apache mod_rewrite for Laravel routes
+# 4. Enable Apache mod_rewrite for Laravel routes
 RUN a2enmod rewrite
 
-# Set working directory
 WORKDIR /var/www/html
-
-# Copy your project files
 COPY . .
 
-# 3. Install Composer and PHP dependencies
+# 5. Install PHP dependencies (Composer)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
-# 4. Install NPM dependencies and Build Vite Assets
-# This creates the public/build/manifest.json file Laravel is looking for
+# 6. Install JS dependencies & Build Assets
+# This runs Vite, which looks at your tailwind.config.js and compiles everything
 RUN npm install
 RUN npm run build
 
-# 5. Set permissions for Laravel
+# 7. Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Point Apache to the Laravel 'public' folder
+# 8. Point Apache to Laravel's public folder
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
