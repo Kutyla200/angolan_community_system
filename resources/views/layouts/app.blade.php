@@ -402,11 +402,11 @@
                             </p>
                             <p class="text-gray-300 flex items-center">
                                 <i class="bi bi-telephone mr-2 text-accent"></i>
-                                <a href="tel:+27843412464" class="hover:text-white transition">+27 84 341 2464</a>
+                                <a href="tel:+27604360521" class="hover:text-white transition">+27 60 436 0521</a>
                             </p>
                             <p class="text-gray-300 flex items-center">
                                 <i class="bi bi-whatsapp mr-2 text-green-400"></i>
-                                <a href="https://wa.me/27843412464" target="_blank" class="hover:text-white transition">{{ __('WhatsApp') }}</a>
+                                <a href="https://wa.me/27604360521" target="_blank" class="hover:text-white transition">{{ __('WhatsApp') }}</a>
                             </p>
                         </div>
                     </div>

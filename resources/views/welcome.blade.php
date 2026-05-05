@@ -630,6 +630,166 @@
     </div>
 </section>
 
+<!-- Logo Meaning Section -->
+<section id="logo-meaning" class="section" style="display: block; visibility: visible; opacity: 1; padding: 5rem 0; background: linear-gradient(160deg, #0a2e1a 0%, #0d3b22 40%, #0a2818 100%); position: relative; overflow: hidden;">
+
+    {{-- Decorative background elements --}}
+    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(204,9,47,0.1) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;border:1px solid rgba(255,255,255,0.03);pointer-events:none;"></div>
+
+    <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem; position:relative; z-index:2;">
+
+        {{-- Section Header --}}
+        <div class="text-center mb-16 animate-on-scroll">
+            <span style="display:inline-block;background:rgba(255,209,0,0.15);color:#FFD100;border:1px solid rgba(255,209,0,0.3);padding:0.35rem 1.2rem;border-radius:50px;font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.5rem;">
+                {{ __('Our Symbol') }}
+            </span>
+            <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#ffffff;margin-bottom:1rem;line-height:1.1;">
+                {{ __('The Meaning Behind Our Logo') }}
+            </h2>
+            <p style="color:rgba(255,255,255,0.65);font-size:1.1rem;max-width:600px;margin:0 auto;line-height:1.7;">
+                {{ __('Every element of our emblem carries deep meaning — rooted in African philosophy and the shared story of two nations.') }}
+            </p>
+        </div>
+
+        {{-- Logo + Symbol Elements --}}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-bottom:4rem;" class="logo-meaning-grid">
+
+            {{-- Left: Logo visual focal point --}}
+            <div class="animate-on-scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <div style="position:relative;width:220px;height:220px;margin:0 auto 2rem;">
+                    {{-- Glowing ring --}}
+                    <div style="position:absolute;inset:-16px;border-radius:50%;background:conic-gradient(from 0deg,#CC092F,#FFD100,#008751,#003087,#ffffff,#CC092F);opacity:0.5;animation:spin-slow 12s linear infinite;"></div>
+                    <div style="position:absolute;inset:-8px;border-radius:50%;background:#0d3b22;"></div>
+                    <div style="position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,0.1);box-shadow:0 0 60px rgba(255,209,0,0.2);">
+                        <img src="{{ asset('umoja.jpeg') }}" alt="{{ __('UMOJA Angola Logo') }}" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                </div>
+                {{-- Ubuntu quote --}}
+                <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,209,0,0.2);border-radius:20px;padding:1.5rem 2rem;text-align:center;max-width:320px;backdrop-filter:blur(10px);">
+                    <p style="color:#FFD100;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;font-style:italic;">"{{ __('Eu sou porque você é') }}"</p>
+                    <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;">{{ __('Ubuntu Philosophy') }}</p>
+                    <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;margin-top:0.75rem;line-height:1.6;">
+                        {{ __('I am because you are — the African philosophy of human interconnectedness that guides our community.') }}
+                    </p>
+                </div>
+            </div>
+
+            {{-- Right: Symbol breakdown --}}
+            <div class="animate-on-scroll" style="display:flex;flex-direction:column;gap:1.25rem;">
+
+                <div class="logo-element-card" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;transition:all 0.3s ease;backdrop-filter:blur(8px);">
+                    <div style="min-width:48px;height:48px;background:linear-gradient(135deg,rgba(0,135,81,0.3),rgba(0,135,81,0.1));border:1px solid rgba(0,135,81,0.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⭕</div>
+                    <div>
+                        <h4 style="color:#ffffff;font-weight:800;margin-bottom:0.3rem;font-size:0.95rem;">{{ __('Circle of Heads') }}</h4>
+                        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;">{{ __('Represents community, equality and inclusion. The unbroken circle symbolises continuity and unity — every person holds equal value within UMOJA.') }}</p>
+                    </div>
+                </div>
+
+                <div class="logo-element-card" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;transition:all 0.3s ease;backdrop-filter:blur(8px);">
+                    <div style="min-width:48px;height:48px;background:linear-gradient(135deg,rgba(255,209,0,0.3),rgba(255,209,0,0.1));border:1px solid rgba(255,209,0,0.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🤝</div>
+                    <div>
+                        <h4 style="color:#ffffff;font-weight:800;margin-bottom:0.3rem;font-size:0.95rem;">{{ __('Two Joined Hands') }}</h4>
+                        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;">{{ __('A universal gesture of friendship and commitment — symbolising solidarity, mutual support and cooperation among members and between peoples.') }}</p>
+                    </div>
+                </div>
+
+                <div class="logo-element-card" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;transition:all 0.3s ease;backdrop-filter:blur(8px);">
+                    <div style="min-width:48px;height:48px;background:linear-gradient(135deg,rgba(204,9,47,0.3),rgba(204,9,47,0.1));border:1px solid rgba(204,9,47,0.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:bold;">🇦🇴🇿🇦</div>
+                    <div>
+                        <h4 style="color:#ffffff;font-weight:800;margin-bottom:0.3rem;font-size:0.95rem;">{{ __('Angola & South Africa Flags') }}</h4>
+                        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;">{{ __('Angola as our cultural origin; South Africa as our home and place of growth. Together they represent cultural exchange, integration and pride in our roots.') }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- Colour Meanings --}}
+        <div class="animate-on-scroll">
+            <h3 style="text-align:center;color:rgba(255,255,255,0.9);font-weight:800;font-size:1.4rem;margin-bottom:2rem;letter-spacing:-0.01em;">{{ __('The Meaning of Our Colours') }}</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;">
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#CC092F,#9e0020);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(204,9,47,0.3);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(204,9,47,0.2);color:#ff6b7a;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('Angola') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('Red') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __('Courage, struggle and the sacrifice of the Angolan people.') }}</p>
+                    </div>
+                </div>
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);border-top:1px solid rgba(255,255,255,0.1);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('Angola') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('Black') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __('The African continent, identity and the strength of the people.') }}</p>
+                    </div>
+                </div>
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#FFD100,#e6b800);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,209,0,0.3);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(255,209,0,0.15);color:#FFD100;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('Angola') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('Yellow') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __("Angola's natural wealth, resources and hope for prosperity.") }}</p>
+                    </div>
+                </div>
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#008751,#005c36);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(0,135,81,0.3);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(0,135,81,0.2);color:#4ade9a;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('South Africa') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('Green') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __('The land, growth and renewal of our adopted home.') }}</p>
+                    </div>
+                </div>
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#003087,#001f5c);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(0,48,135,0.5);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(0,48,135,0.3);color:#7eb3ff;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('South Africa') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('Blue') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __('The sky above us — peace and harmony for all.') }}</p>
+                    </div>
+                </div>
+
+                <div class="colour-card" style="border-radius:16px;overflow:hidden;text-align:center;transition:transform 0.3s ease;">
+                    <div style="height:60px;background:linear-gradient(135deg,#f0f0f0,#d8d8d8);"></div>
+                    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-top:none;padding:1rem;border-radius:0 0 16px 16px;">
+                        <span style="display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.5rem;">{{ __('South Africa') }}</span>
+                        <p style="color:#ffffff;font-weight:700;font-size:0.9rem;margin-bottom:0.25rem;">{{ __('White') }}</p>
+                        <p style="color:rgba(255,255,255,0.55);font-size:0.78rem;line-height:1.5;">{{ __('The union of cultures and the pursuit of peace together.') }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- Closing Ubuntu statement --}}
+        <div class="animate-on-scroll" style="margin-top:4rem;text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:2.5rem 2rem;max-width:700px;margin-left:auto;margin-right:auto;margin-top:3rem;backdrop-filter:blur(8px);">
+            <i class="bi bi-globe-africa" style="font-size:2.5rem;color:#FFD100;display:block;margin-bottom:1rem;"></i>
+            <p style="color:rgba(255,255,255,0.85);font-size:1.05rem;line-height:1.8;margin-bottom:0;">
+                {{ __('Our emblem speaks of a united African community that honours its Angolan roots while growing in a South African context. It communicates unity, diversity, solidarity and collective identity — summed up in one truth:') }}
+                <strong style="color:#FFD100;display:block;margin-top:0.75rem;font-size:1.1rem;">{{ __('No one exists alone. We are through one another.') }}</strong>
+            </p>
+        </div>
+
+    </div>
+
+    {{-- Inline styles for this section --}}
+    <style>
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .logo-element-card:hover { background: rgba(255,255,255,0.09) !important; transform: translateX(6px); }
+        .colour-card:hover { transform: translateY(-6px); }
+        @media (max-width: 768px) {
+            .logo-meaning-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+</section>
+
 <!-- Features Section -->
 <section id="features" class="section bg-white" style="display: block; visibility: visible; opacity: 1; padding: 4rem 0; background: white;">
     <div class="container-wide px-4 sm:px-6 lg:px-8" style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
@@ -937,8 +1097,8 @@
                             <i class="bi bi-telephone-fill"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('Phone') }}</h4>
-                        <a href="tel:+27843412464" class="text-red-600 hover:text-red-800 transition font-semibold">
-                            +27 84 341 2464
+                        <a href="tel:+27604360521" class="text-red-600 hover:text-red-800 transition font-semibold">
+                            +27 60 436 0521
                         </a>
                     </div>
                     <div class="contact-card">
@@ -946,9 +1106,9 @@
                             <i class="bi bi-whatsapp"></i>
                         </div>
                         <h4 class="font-black text-gray-900 mb-2">{{ __('WhatsApp') }}</h4>
-                        <a href="https://wa.me/27721935485" target="_blank" class="text-green-600 hover:text-green-800 transition font-semibold">
+                        <a href="https://wa.me/27604360521" target="_blank" class="text-green-600 hover:text-green-800 transition font-semibold">
                             {{ __('Send Message') }}
-                        </a>
+                        </a>    
                     </div>
                 </div>
             </div>
