@@ -668,7 +668,7 @@
                 </div>
                 {{-- Ubuntu quote --}}
                 <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,209,0,0.2);border-radius:20px;padding:1.5rem 2rem;text-align:center;max-width:320px;backdrop-filter:blur(10px);">
-                    <p style="color:#FFD100;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;font-style:italic;">"{{ __('Eu sou porque você é') }}"</p>
+                    <p style="color:#FFD100;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;font-style:italic;">"{{ __('I am because you are') }}"</p>
                     <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;">{{ __('Ubuntu Philosophy') }}</p>
                     <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;margin-top:0.75rem;line-height:1.6;">
                         {{ __('I am because you are — the African philosophy of human interconnectedness that guides our community.') }}
