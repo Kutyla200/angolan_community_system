@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: angolan-community-system
+    runtime: docker # Changed from php to docker
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: mysql
